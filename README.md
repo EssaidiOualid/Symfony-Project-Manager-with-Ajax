@@ -15,7 +15,7 @@ Chat: The Projects Manager application includes a real-time chat feature that al
 Installation
 Follow these steps to install and run the Projects Manager application:
 
-Clone the repository: git clone https://github.com/your-username/projects-manager.git
+Clone the repository: git clone https://github.com/AbderrahamneBouda/projects-manager.git
 Install dependencies: composer install
 Configure the database connection in the .env file.
 Run database migrations: php bin/console doctrine:migrations:migrate
