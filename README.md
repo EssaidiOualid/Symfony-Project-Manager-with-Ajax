@@ -22,10 +22,22 @@ Run database migrations: php bin/console doctrine:migrations:migrate
 Start the development server: symfony serve
 Make sure you have PHP and Symfony CLI installed on your system before proceeding with the installation.
 
-Usage
-Admin: As an admin, You can manage users, creating projects, clients, teams.
-Manager: Managers can track and manage projects, create and assign tasks, and monitor their progress. They have limited administrative capabilities.
-Member: Members have access to assigned projects and tasks. They can update task statuses, add comments, and collaborate with other team members.
+# Usage
+<b>Admin:</b> As an admin, You can manage users, creating projects, clients, teams.
+
+default email : <code>root@gmail.com</code>
+
+default password : <code>root</code>
+
+<b>Manager:</b> Managers can track and manage projects, create and assign tasks, and monitor their progress. They have limited administrative capabilities.
+
+default password : <code>user123</code>
+
+<b>Member:</b> Members have access to assigned projects and tasks. They can update task statuses, add comments, and collaborate with other team members.
+
+default password : <code>user123</code>
+
+# Setup
 
 <b>1-Make sure to require the doctrine fixtures bundle</b>
 <code>composer require --dev doctrine/doctrine-fixtures-bundle</code><br>
