@@ -41,7 +41,7 @@ class UserFixture extends Fixture
             $user = new User();
             $user->setEmail("user$i@example.com");
             $user->setRoles(["ROLE_USER"]);
-            $user->setPassword('$2y$10$JKoQ79eQoKPDUpf7t8xS0uJRXT1/jwpFkmC1qTJJXseVyEJmK3aPi'); // Example hashed password
+            $user->setPassword('user123'); // Example hashed password
             $user->setFirstName("User$i");
             $user->setLastName("Doe");
             $user->setAddress("123 Main Street");
