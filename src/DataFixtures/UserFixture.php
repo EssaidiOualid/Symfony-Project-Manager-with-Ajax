@@ -28,6 +28,7 @@ class UserFixture extends Fixture
             ->setDateOfBirth($formattedDateOfBirth)
             ->setEmail('root@gmail.com')
             ->setFirstName('root')
+            ->setRoles(["ROLE_ADMIN"])
             ->setLastName('root')
             ->setPassword($this->passwordHasher->hashPassword($user, $password))
             ->setPhoneNumber('0615225879')
