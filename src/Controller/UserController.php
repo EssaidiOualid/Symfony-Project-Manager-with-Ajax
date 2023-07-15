@@ -58,7 +58,7 @@ class UserController extends AbstractController
             ->setFirstName($request->get('fisrtname'))
             ->setLastName($request->get('lastname'))
             ->setRoles(["ROLE_USER"])
-            ->setPassword($this->passwordHasher->hashPassword($user, $request->get('dob').$request->get('lastname')))
+            ->setPassword($this->passwordHasher->hashPassword($user, "user123"))
             ->setPhoneNumber($request->get('phonenumber'))
             ->setState($request->get('state'))
             ->setZipCode($request->get('zipcode'));
