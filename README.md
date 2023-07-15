@@ -27,7 +27,17 @@ Admin: As an admin, You can manage users, creating projects, clients, teams.
 Manager: Managers can track and manage projects, create and assign tasks, and monitor their progress. They have limited administrative capabilities.
 Member: Members have access to assigned projects and tasks. They can update task statuses, add comments, and collaborate with other team members.
 
-<b>Make sure to require the doctrine fixtures bundle and load the fixtures files</b><br>
+<b>1-Make sure to require the doctrine fixtures bundle</b>
 <code>composer require --dev doctrine/doctrine-fixtures-bundle</code><br>
-<code>symfony console d:f:l</code>
+
+<b>2-Update the <code>.env</code> to match your DATABASE configuration</b><br>
+
+<b>3-Create the DATABASE</b><br>
+<code>symfony console doctrine:database:create</code><br>
+
+<b>4-Execute the migration</b><br>
+<code>symfony console doctrine:migrations:migrate</code><br>
+
+<b>5-Run the Doctrine Fixtures</b><br>
+<code>symfony console doctrine:fixtures:load</code>
 
