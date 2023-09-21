@@ -12,7 +12,7 @@ Reporting: Generate reports and analytics to gain insights into project progress
 Chat: The Projects Manager application includes a real-time chat feature that allows team members to communicate and collaborate within the platform.
       The chat feature provides a centralized space for discussions, and sharing information related to projects and tasks.
 
-Installation
+## Installation
 Follow these steps to install and run the Projects Manager application:
 
 Clone the repository: git clone https://github.com/AbderrahamneBouda/projects-manager.git
