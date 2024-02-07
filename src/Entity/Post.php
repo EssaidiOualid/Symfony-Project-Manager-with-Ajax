@@ -30,9 +30,6 @@ class Post
     #[ORM\Column]
     private ?int $nbrReste = null;
 
-    #[ORM\OneToMany(mappedBy: 'Post', targetEntity: Candidat::class, orphanRemoval: true, cascade:["persist","remove"])]
-    private Collection $candidats;
-
     public function __construct()
     {
         $this->candidats = new ArrayCollection();
@@ -99,36 +96,6 @@ class Post
     public function setNbrReste(int $nbrReste): static
     {
         $this->nbrReste = $nbrReste;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Candidat>
-     */
-    public function getCandidats(): Collection
-    {
-        return $this->candidats;
-    }
-
-    public function addCandidat(Candidat $candidat): static
-    {
-        if (!$this->candidats->contains($candidat)) {
-            $this->candidats->add($candidat);
-            $candidat->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCandidat(Candidat $candidat): static
-    {
-        if ($this->candidats->removeElement($candidat)) {
-            // set the owning side to null (unless already changed)
-            if ($candidat->getPost() === $this) {
-                $candidat->setPost(null);
-            }
-        }
 
         return $this;
     }

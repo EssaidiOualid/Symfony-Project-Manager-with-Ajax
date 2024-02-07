@@ -21,9 +21,13 @@ class Type
     #[ORM\OneToMany(mappedBy: 'Type', targetEntity: Specialite::class, orphanRemoval: true, cascade:["persist","remove"])]
     private Collection $specialites;
 
+    #[ORM\OneToMany(mappedBy: 'Type', targetEntity: Candidate::class)]
+    private Collection $candidates;
+
     public function __construct()
     {
         $this->specialites = new ArrayCollection();
+        $this->candidates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Type
             // set the owning side to null (unless already changed)
             if ($specialite->getType() === $this) {
                 $specialite->setType(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Candidate>
+     */
+    public function getCandidates(): Collection
+    {
+        return $this->candidates;
+    }
+
+    public function addCandidate(Candidate $candidate): static
+    {
+        if (!$this->candidates->contains($candidate)) {
+            $this->candidates->add($candidate);
+            $candidate->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidate(Candidate $candidate): static
+    {
+        if ($this->candidates->removeElement($candidate)) {
+            // set the owning side to null (unless already changed)
+            if ($candidate->getType() === $this) {
+                $candidate->setType(null);
             }
         }
 

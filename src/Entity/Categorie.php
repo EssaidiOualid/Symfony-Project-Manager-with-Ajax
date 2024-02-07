@@ -21,9 +21,13 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Post::class, orphanRemoval: true, cascade:["persist","remove"])]
     private Collection $posts;
 
+    #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Candidate::class)]
+    private Collection $candidates;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->candidates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($post->getCategorie() === $this) {
                 $post->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Candidate>
+     */
+    public function getCandidates(): Collection
+    {
+        return $this->candidates;
+    }
+
+    public function addCandidate(Candidate $candidate): static
+    {
+        if (!$this->candidates->contains($candidate)) {
+            $this->candidates->add($candidate);
+            $candidate->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidate(Candidate $candidate): static
+    {
+        if ($this->candidates->removeElement($candidate)) {
+            // set the owning side to null (unless already changed)
+            if ($candidate->getCategorie() === $this) {
+                $candidate->setCategorie(null);
             }
         }
 

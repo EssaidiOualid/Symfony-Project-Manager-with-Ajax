@@ -25,9 +25,6 @@ class Session
     #[ORM\OneToMany(mappedBy: 'Session', targetEntity: Post::class, orphanRemoval: true, cascade:["persist","remove"])]
     private Collection $posts;
 
-    #[ORM\OneToMany(mappedBy: 'Session', targetEntity: Candidat::class, orphanRemoval: true, cascade:["persist","remove"])]
-    private Collection $candidats;
-
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -87,36 +84,6 @@ class Session
             // set the owning side to null (unless already changed)
             if ($post->getSession() === $this) {
                 $post->setSession(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Candidat>
-     */
-    public function getCandidats(): Collection
-    {
-        return $this->candidats;
-    }
-
-    public function addCandidat(Candidat $candidat): static
-    {
-        if (!$this->candidats->contains($candidat)) {
-            $this->candidats->add($candidat);
-            $candidat->setSession($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCandidat(Candidat $candidat): static
-    {
-        if ($this->candidats->removeElement($candidat)) {
-            // set the owning side to null (unless already changed)
-            if ($candidat->getSession() === $this) {
-                $candidat->setSession(null);
             }
         }
 
