@@ -22,6 +22,9 @@ class DashboardController extends AbstractController
     private $messageRepository;
     private $taskRepository;
     private $userRepository;
+    private $postRepository;
+    private $typeRepository;
+    private $categorieRepository;
 
     public function __construct(
         PostRepository $postRepository,
@@ -45,9 +48,11 @@ class DashboardController extends AbstractController
 
        // dd($posts);
 
+       $table = [];
+
         foreach( $posts as $post){
            
-            $table[ $post->getSpecialite()->getId()][ $post->getCategorie()->getId()]= $post->getNbrPost();
+            $table[$post->getSpecialite()->getId()][$post->getCategorie()->getId()] = $post->getNbrPost();
 
         }
        // dd($table);

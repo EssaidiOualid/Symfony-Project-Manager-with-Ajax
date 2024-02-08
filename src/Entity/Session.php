@@ -31,7 +31,6 @@ class Session
     public function __construct()
     {
         $this->posts = new ArrayCollection();
-        $this->candidats = new ArrayCollection();
     }
 
     public function getId(): ?int
