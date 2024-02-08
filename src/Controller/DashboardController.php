@@ -26,20 +26,22 @@ class DashboardController extends AbstractController
     public function __construct(
         PostRepository $postRepository,
         TypeRepository $typeRepository,
-        CategorieRepository $categorieRepository,
+        CategorieRepository $categorieRepository
     ) {
         $this->postRepository = $postRepository;
         $this->typeRepository = $typeRepository;
         $this->categorieRepository = $categorieRepository;
     }
     #[Route('/dashboard', name: 'dashboard')]
-    public function index(Security $security,): Response
+    public function index(Security $security): Response
     {
         /** @var User*/
         $user = $security->getUser();
         $types =$this->typeRepository->findAll();
         $posts =$this->postRepository->findBySession();
         $categories =$this->categorieRepository->findAll();
+
+
 
        // dd($posts);
 
@@ -55,7 +57,6 @@ class DashboardController extends AbstractController
             'posts' => $table,
             'types' => $types,
             'categories' => $categories,
-          
         ]);
     }
 }
