@@ -61,4 +61,41 @@ class CandidateController extends AbstractController
 
         return $this->render('candidate/index.html.twig')->getContent();
     }
+
+    #[Route('/posts/get', name: 'get_posts', methods: 'get')]
+    public function getposts() : JsonResponse{
+        $posts = $this->PostRepository->findBy(['Session' => $this->sessionRepository->findOneBy(['active' => true])]);;
+        $posts_data = [];
+        foreach ($posts as $post)
+        array_push($posts_data, 
+    ['id' => $post->getSpecialite()->getId(),
+    //'session' => $post->getSession()->getSession(),
+    'specialite' => $post->getSpecialite()->getIntitule(),
+    //'categorie' => $post->getCategorie()->getIntitule(),
+    //'nbr_post' => $post->getNbrPost(),
+    //'nbr_reste' => $post->getNbrReste()  
+    'nbr_reste' => [$post->getCategorie()->getIntitule() => $post->getNbrReste()]
+    ]
+    ); 
+    $newArray = [];
+
+    foreach ($posts_data as $item) {
+        $id = $item['id'];
+        $specialite = $item['specialite'];
+    
+        if (!isset($newArray[$id][$specialite])) {
+            $newArray[$id][$specialite] = [
+                'id' => $id,
+                'specialite' => $specialite,
+                'nbr_reste' => []
+            ];
+        }
+    
+        $newArray[$id][$specialite]['nbr_reste'] = array_merge($newArray[$id][$specialite]['nbr_reste'], $item['nbr_reste']);
+    }
+    
+    $newArray = array_map('array_values', $newArray);
+    $newArray = array_merge(...$newArray);        
+        return new JsonResponse($newArray);
+    }
 }
