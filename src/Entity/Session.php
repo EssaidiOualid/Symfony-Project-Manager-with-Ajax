@@ -25,6 +25,9 @@ class Session
     #[ORM\OneToMany(mappedBy: 'Session', targetEntity: Post::class, orphanRemoval: true, cascade:["persist","remove"])]
     private Collection $posts;
 
+    #[ORM\Column]
+    private ?bool $active = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -86,6 +89,18 @@ class Session
                 $post->setSession(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }

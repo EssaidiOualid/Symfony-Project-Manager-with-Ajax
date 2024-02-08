@@ -45,4 +45,23 @@ class PostRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+    public function findBySession(): array
+    {
+        $active='1';
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT p
+            FROM App\Entity\Post p
+            inner Join App\Entity\Session  s
+            WHERE s.active = :active
+            "
+        )->setParameter('active', $active);
+
+        return $query->getResult();
+    }
 }

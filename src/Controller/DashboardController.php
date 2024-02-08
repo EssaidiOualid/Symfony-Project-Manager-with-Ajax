@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CategorieRepository;
 use App\Repository\MessageRepository;
+use App\Repository\PostRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
+use App\Repository\TypeRepository;
 use App\Repository\UserRepository;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,67 +24,38 @@ class DashboardController extends AbstractController
     private $userRepository;
 
     public function __construct(
-        ProjectRepository $projectRepository,
-        MessageRepository $messageRepository,
-        TaskRepository $taskRepository,
-        UserRepository $userRepository,
+        PostRepository $postRepository,
+        TypeRepository $typeRepository,
+        CategorieRepository $categorieRepository,
     ) {
-        $this->projectRepository = $projectRepository;
-        $this->messageRepository = $messageRepository;
-        $this->userRepository = $userRepository;
-        $this->taskRepository = $taskRepository;
+        $this->postRepository = $postRepository;
+        $this->typeRepository = $typeRepository;
+        $this->categorieRepository = $categorieRepository;
     }
     #[Route('/dashboard', name: 'dashboard')]
-    public function index(Security $security): Response
+    public function index(Security $security,): Response
     {
         /** @var User*/
         $user = $security->getUser();
-        $projectLits = $this->projectRepository->findAll();
-        $memberList = $this->userRepository->findAll();
-        $messages = $this->messageRepository->findBy(['recipent' => $user->getId()]);
+        $types =$this->typeRepository->findAll();
+        $posts =$this->postRepository->findBySession();
+        $categories =$this->categorieRepository->findAll();
 
-        
+       // dd($posts);
 
-        //preparing data for the chart
-        $currentDate = Carbon::now();
-        $last7days = array();
-        $last7days[] = $currentDate->toDateString();
-        for($i = 1; $i < 7; $i++){
-            $date = $currentDate->subDay()->toDateString();
-            $last7days[] = $date;
+        foreach( $posts as $post){
+           
+            $table[ $post->getSpecialite()->getId()][ $post->getCategorie()->getId()]= $post->getNbrPost();
+
         }
-        $taskList = $this->taskRepository->findAll();
-        $last7days = array_reverse($last7days);
-
-        $tab = array();
-        foreach ($memberList as $index => $member) {
-            $tab[$index]['object'] = $member;
-            $count = 0;
-        
-            foreach ($member->getTasks() as $task) {
-                if ($task->getStatus() === 'Finished') {
-                    $count++;
-                }
-            }
-        
-            $tab[$index]['nmbrOfTask'] = $count;
-        }
-
-        usort($tab, function($a, $b){
-            return $b['nmbrOfTask'] - $a['nmbrOfTask'];
-        });
-
-        $tab = array_slice($tab, 0, 3);
-        
-
+       // dd($table);
+      
 
         return $this->render('dashboard/index.html.twig', [
-            'project_list' => $projectLits,
-            'task_list' => $taskList,
-            'member_list' => $memberList,
-            'messages' => $messages,
-            'last7days' => $last7days,
-            'top_3_member' => $tab
+            'posts' => $table,
+            'types' => $types,
+            'categories' => $categories,
+          
         ]);
     }
 }
