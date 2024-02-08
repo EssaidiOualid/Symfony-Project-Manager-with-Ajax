@@ -1,11 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    {% set taskCounts = {} %}
+
+	<table border="1" width="1000">
+	<tr>
+	<th>Type</th>
+	{% for categorie in categories %}
+	<th>{{ categorie.intitule }} </th>
 	{% set taskCounts = {} %}
 	{% for day in last7days %}
 		{% set tasks = task_list|filter(task => task.status == 'Finished' and task.enddate|date('Y-m-d') == day) %}
 		{% set taskCounts = taskCounts|merge([tasks|length]) %}
 	{% endfor %}
+	</tr>
+{% for type in types %}
+	<tr>
+	<td >--- {{ type.intitule }} ---</td>
+	<td colspan="4" >--------------------------------------------------------------------------------------------</td>
+	</tr>
+	{% for specialite in type.specialites %}
+	<tr>
+	<td>{{ specialite.intitule }} </td>
+	{% for categorie in categories %}
+	<td >
+	{% if posts[specialite.id][categorie.id] is defined %}
+	{{ 	posts[specialite.id][categorie.id] }}
+	{% else %}
+	0
+	{% endif %}
+	</td>
+	{% endfor %}
+	</tr>
+
+	{% endfor %}
+	{% endfor %}
+	</table>
+
+
+
+  
+{% endblock %}
 	<div id="data" class="d-none" data-task-counts="{{ taskCounts|json_encode|raw }}"></div>
 	<div class="row gy-4">
 		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
