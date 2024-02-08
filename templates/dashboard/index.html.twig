@@ -1,0 +1,280 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {% set taskCounts = {} %}
+	{% for day in last7days %}
+		{% set tasks = task_list|filter(task => task.status == 'Finished' and task.enddate|date('Y-m-d') == day) %}
+		{% set taskCounts = taskCounts|merge([tasks|length]) %}
+	{% endfor %}
+	<div id="data" class="d-none" data-task-counts="{{ taskCounts|json_encode|raw }}" ></div>
+	<div class="row gy-4">
+		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bx-comment-dots text-dark mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Unread<br>
+						Messages</span>
+					<h3 class="card-title mb-2">{{ messages|filter(m => m.status == 0)|length }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bxs-user text-info mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Registred
+						<br/>
+						Members</span>
+					<h3 class="card-title text-info mb-2">{{ member_list|length }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Number of<br>
+						Projects</span>
+					<h3 class="card-title mb-2">{{ project_list|length }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bx-check-square text-success mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Finished
+						<br/>
+						Projects</span>
+					<h3 class="card-title text-success mb-2">{{ project_list|filter(p => p.status == 'Finished')|length }}</h3>
+				</div>
+			</div>
+		</div>
+		<h2>Affectation Médicale</h2>
+		<table id= "myTable" class="table">
+			<thead>
+			<tr>
+				<th scope="col">Spécialité</th>
+				<th scope="col">Contrat</th>
+				<th scope="col">Benevole marocains</th>
+				<th scope="col">Benevole étrangers</th>
+				<th scope="col">CHU</th>
+				<th scope="col">Total</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>ANESTHESIE REANIMATION</td>
+				<td>15</td>
+				<td>8</td>
+				<td>2</td>
+				<td>0</td>
+				<td>25</td>
+			</tr>
+			</tbody>
+		</table>
+		<nav aria-label="..." id="pagination">
+			<ul class="pagination">
+			</ul>
+		</nav>
+    <script src="{{ asset('assets/js/chart.js') }}"></script>
+	<script src="{{ asset('assets/js/pagination.js') }}"></script>
+    {% block javascript %}
+        <script>
+            //set active page
+            $('#dashboard').toggleClass('active');
+        </script>
+        <script>
+            var chartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                y: {
+                    beginAtZero: true,
+					ticks:{
+						stepSize: 1
+					}
+                },
+                },
+            };
+            // Get the canvas element
+            var ctx = $("#tasksChart")[0].getContext('2d');
+            
+            // Define the data for the chart
+            var data = $('#data').data('task-counts');
+            var weekdays ={{last7days|json_encode|raw}};
+            
+            // Create the chart
+            var tasksChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                labels: weekdays, // Set the weekdays as the x-axis labels
+                datasets: [
+                    {
+                    label: 'Tasks',
+                    data: data, // Set the data for the bar heights
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the bar background color
+                    borderColor: 'rgba(75, 192, 192, 1)', // Set the bar border color
+                    borderWidth: 1, // Set the bar border width
+                    },
+                ],
+                },
+                options: chartOptions
+            });
+			
+			
+    </script>
+    {% endblock %}
+{% endblock %}

@@ -18,45 +18,7 @@ function extractDataFromTable(tableId) {
 }
 // Sample data
 const data = extractDataFromTable('myTable');
-/*[
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    { col1: 'ANESTHESIE REANIMATION', col2: '15', col3: '8' , col4: '2' , col5: '0' , col6: '25'},
-    // Add more data here if needed
-    ];*/
+
     console.log(data)
   
     const itemsPerPage = 10;
