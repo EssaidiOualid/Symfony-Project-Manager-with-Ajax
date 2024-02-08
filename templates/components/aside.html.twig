@@ -1,14 +1,9 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-	<div class="app-brand demo">
+	<div class="app-brand demo" style="height: 220px; padding: 0 22px; margin: 33px 0">
 		<a href="{{ path('dashboard') }}" class="app-brand-link d-flex gap-1">
-			<span class="app-brand-logo demo" style="height: 3rem;width: 3rem;">
-				<img src="{{ asset('assets/img/icons/logo/logo.jpg') }}" style="height: 3rem;width: 3rem;object-fit:cover;" alt="">
+			<span class="app-brand-logo demo" style="">
+				<img src="{{ asset('assets/img/icons/logo/logo_fmpt.png') }}" style="object-fit:cover; height: 200px; margin: 0 auto;" alt="">
 			</span>
-			<span class="fs-4 demo menu-text fw-bolder ms-2">ProjectEase</span>
-		</a>
-
-		<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-			<i class="bx bx-chevron-left bx-sm align-middle"></i>
 		</a>
 	</div>
 
@@ -20,36 +15,30 @@
 		<li class="menu-item"  id="dashboard">
 			<a href="{{ path('dashboard') }}" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-home-circle"></i>
-				<div data-i18n="Analytics">Dashboard</div>
+				<div data-i18n="Analytics">Acceuil</div>
 			</a>
 		</li>
 
 		<li class="menu-item" id="members">
 			<a href="{{ path('member_list') }}" class="menu-link">
 				<i class='menu-icon bx bx-user'></i>
-				<div data-i18n="Members">Members</div>
+				<div data-i18n="Members">Affectation</div>
 			</a>
 		</li>
 
 		<li class="menu-item" id="teams">
 			<a href="{{ path('team_list') }}" class="menu-link">
 				<i class='menu-icon bx bx-group'></i>
-				<div data-i18n="Members">Teams</div>
+				<div data-i18n="Members">Documents</div>
 			</a>
 		</li>
 
 		<li class="menu-item" id="clients">
 			<a href="{{ path('client_list') }}" class="menu-link">
 				<i class='menu-icon bx bx-user-pin'></i>
-				<div data-i18n="Members">Clients</div>
+				<div data-i18n="Members">Attesstations</div>
 			</a>
 		</li>
 
-		<li class="menu-item" id="projects">
-			<a href="{{ path('project_list') }}" class="menu-link">
-				<i class='menu-icon bx bx-network-chart'></i>
-				<div data-i18n="Projects">Projects</div>
-			</a>
-		</li>
 	</ul>
 </aside>
