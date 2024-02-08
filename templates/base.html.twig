@@ -9,6 +9,18 @@
 	{% block javascripts %}
 		{{ encore_entry_script_tags('app') }}
 	{% endblock %}
+    <style>
+        .hidden {
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+        }
+
+    </style>
 </head>
 <body class="border my-0">
     <!-- Layout wrapper -->
@@ -27,7 +39,7 @@
             <div class="layout-page">
                 <!-- Navbar -->
                 
-				{{ include('components/navbar.html.twig') }}
+				
 
                 <!-- / Navbar -->
 
