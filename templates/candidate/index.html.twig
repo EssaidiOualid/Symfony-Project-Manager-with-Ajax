@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CandidateController!
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="table-responsive">
+			<h3 class="card-header">List des  Candidat</h3>
+			{% for type in type_list %}
+
+
+				<h4 class="card-header text-center">{{type.intitule}}</h4>
+
+
+				<table class="table table-striped" id="client_table">
+
+
+					<thead>
+						<tr>
+
+							<th style="width: 10rem;">CIN</th>
+
+							<th style="width: 10rem;">Nom</th>
+
+							<th style="width: 10rem;">Prenom</th>
+
+							<th style="width: 10rem;">Nationalite</th>
+
+							<th style="width: 10rem;">Fonctionnaire</th>
+
+
+							<th style="width: 20rem;">Specialite</th>
+
+
+							<th style="width: 20rem;">Option</th>
+
+
+						</tr>
+					</thead>
+					<tbody>
+						{% for Candidat in candidat_list %}
+
+							{% if (Candidat.type.intitule == type.intitule) %}
+
+
+								<tr>
+									<td>{{ Candidat.cin }}</td>
+									<td>{{ Candidat.nom }}</td>
+									<td>{{ Candidat.prenom }}</td>
+									<td>{{ Candidat.nationnalite }}</td>
+									<td>{{ Candidat.Fonctionnaire ? "oui":"Non" }}</td>
+
+									<td>
+
+										<select class="form-select">
+
+
+											{% for Post in post_list %}
+												{% if (Post.Specialite.type.intitule == type.intitule  and Post.nbrreste > 0)  %}
+
+													<option>{{ Post.Specialite.intitule }}</option>
+
+
+												{% endif %}
+
+											{% endfor %}
+										</select>
+									</td>
+									<td>
+										{% if Candidat.Fonctionnaire == true or Candidat.nationnalite =='etranger'   %}
+
+											<select class="form-select" disabled>
+
+
+												<option>{{Candidat.categorie.intitule}}</option>
+
+											</select>
+
+										{% else %}
+											<select class="form-select">
+												{% for categorie in categorie_list %}
+													{% if categorie.intitule != 'benevole etranger' %}
+
+
+														<option>{{categorie.intitule}}</option>
+													{% endif %}
+
+												{% endfor %}
+											</select>
+
+										{% endif %}
+
+
+									</td>
+									
+									<td>
+										<a class="btn btn-primary btn-sm edit_client_btn" data-id="{{ Candidat.id }}" style="width: 2.6rem;" href="javascript:void(0);">
+
+											<i class="bx bx-check me-1"></i>
+										</a>
+
+									</td>
+								</tr>
+
+							{% endif %}
+						{% endfor %}
+					</tbody>
+
+
+				</table>
+			{% endfor %}
+
+
+		</div>
+	</div>
+{% endblock %}
