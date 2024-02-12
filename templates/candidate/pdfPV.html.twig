@@ -1,0 +1,58 @@
+{% block title %}Hello CandidateController!
+{% endblock %}
+
+{% block content %}
+	<h3 class="card-header">List des  Candidat</h3>
+	{% for type in type_list %}
+
+
+		<h4 class="card-header text-center">{{type.intitule}}</h4>
+
+
+		<table class="table table-striped" id="client_table">
+
+
+			<thead>
+				<tr>
+
+					<th style="width: 10rem;">CIN</th>
+
+					<th style="width: 10rem;">Nom</th>
+
+					<th style="width: 10rem;">Prenom</th>
+
+					<th style="width: 10rem;">Specialite</th>
+
+					<th style="width: 10rem;">categorie</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				{% for Candidat in Candidate_list %}
+
+
+					{% if (Candidat.type.intitule == type.intitule) %}
+
+
+						<tr>
+
+							<td>{{ Candidat.cin }}</td>
+							<td>{{ Candidat.nom }}</td>
+							<td>{{ Candidat.prenom }}</td>
+							<td>{{ Candidat.Specialite ? Candidat.Specialite.intitule : "NON affecter" }}</td>
+
+							<td>{{ Candidat.categorie ? Candidat.categorie.intitule : "NON affecter" }}</td>
+
+
+						</tr>
+
+
+					{% endif %}
+
+				{% endfor %}
+			</tbody>
+
+
+		</table>
+	{% endfor %}
+{% endblock %}

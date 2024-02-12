@@ -2,18 +2,22 @@
 
 namespace App\Controller;
 
+use Knp\Snappy\Pdf;
 use App\Entity\Candidate;
+use App\Entity\Session;
 use App\Repository\PostRepository;
 use App\Repository\TypeRepository;
+use App\Repository\SessionRepository;
 use App\Repository\CandidateRepository;
 use App\Repository\CategorieRepository;
-use App\Repository\SessionRepository;
-use App\Repository\SpecialiteRepository;
 
+use App\Repository\SpecialiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CandidateController extends AbstractController
@@ -22,12 +26,12 @@ class CandidateController extends AbstractController
     private $PostRepository;
     private $categorieRepository;
     private $specialiteRepository;
-    private $clientRepository;
+    private $candidateRepository;
     private $sessionRepository;
     private $manager;
     public function __construct(
         EntityManagerInterface $manger,
-        CandidateRepository $clientRepository,
+        CandidateRepository $candidateRepository,
         SpecialiteRepository $specialiteRepository,
         CategorieRepository $categorieRepository,
         PostRepository $postRepository,
@@ -39,7 +43,7 @@ class CandidateController extends AbstractController
         $this->PostRepository = $postRepository;
         $this->categorieRepository = $categorieRepository;
         $this->specialiteRepository = $specialiteRepository;
-        $this->clientRepository = $clientRepository;
+        $this->candidateRepository = $candidateRepository;
         $this->manager = $manger;
     }
 
@@ -50,8 +54,9 @@ class CandidateController extends AbstractController
         $candidatList2 = $this->PostRepository->findAll();
         $categorie = $this->categorieRepository->findAll();
         $candidatList1 = $this->specialiteRepository->findAll();
-        $candidatList = $this->clientRepository->findBy([
-            'Specialite' => null
+        $candidatList = $this->candidateRepository->findBy([
+            'Specialite' => null,
+            'valide' => 'V'
         ]);
 
 
@@ -65,6 +70,20 @@ class CandidateController extends AbstractController
         ]);
 
         return $this->render('candidate/index.html.twig')->getContent();
+    }
+
+    #[Route('/candidate/update/{id}/{id1}/{id2}', name: 'update_candidate', methods: 'POST')]
+    public function update(Request $request, $id, $id1, $id2): Response
+    {
+        $condidat = $this->candidateRepository->find($id);
+        $specialite = $this->specialiteRepository->find($id1);
+        $categorie = $this->categorieRepository->find($id2);
+        $condidat->setSpecialite($specialite)
+            ->setCategorie($categorie);
+
+        $this->manager->persist($condidat);
+        $this->manager->flush();
+        return new Response('updated');
     }
 
     #[Route('/posts/get', name: 'get_posts', methods: 'get')]
@@ -105,5 +124,27 @@ class CandidateController extends AbstractController
         $newArray = array_map('array_values', $newArray);
         $newArray = array_merge(...$newArray);
         return new JsonResponse($newArray);
+    }
+
+    #[Route('/candidate/pdf', name: 'candidate_PDf', methods: 'get')]
+    public function pdfAction(Pdf $knpSnappyPdf)
+    {
+        $type = $this->TypeRepository->findAll();
+        $candidatList = $this->candidateRepository->findBy([
+            'valide' => 'V',
+            /*  'Session' => $this->sessionRepository->findBy([
+                'active' => 1
+            ]) */
+        ]);
+
+        $html = $this->renderView('candidate/pdfPV.html.twig', array(
+            'Candidate_list'  => $candidatList,
+            'type_list' => $type
+        ));
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'file.pdf'
+        );
     }
 }

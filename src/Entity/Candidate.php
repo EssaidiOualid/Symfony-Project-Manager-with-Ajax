@@ -40,6 +40,51 @@ class Candidate
     #[ORM\ManyToOne(inversedBy: 'candidates')]
     private ?Categorie $Categorie = null;
 
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $nomAr = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $prenomAr = null;
+
+    #[ORM\Column(length: 1, nullable: true)]
+    private ?string $sexe = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $dateNaissance = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $liauNaissance = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $etablissement = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $statut = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $specialite = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $pstChu = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $dateSoutenance = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $numDoc = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $dateInscription = null;
+
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $valide = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +194,174 @@ class Candidate
     public function setCategorie(?Categorie $Categorie): static
     {
         $this->Categorie = $Categorie;
+
+        return $this;
+    }
+
+    public function getNomAr(): ?string
+    {
+        return $this->nomAr;
+    }
+
+    public function setNomAr(?string $nomAr): static
+    {
+        $this->nomAr = $nomAr;
+
+        return $this;
+    }
+
+    public function getPrenomAr(): ?string
+    {
+        return $this->prenomAr;
+    }
+
+    public function setPrenomAr(?string $prenomAr): static
+    {
+        $this->prenomAr = $prenomAr;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?string $sexe): static
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?string
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(?string $dateNaissance): static
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    public function getLiauNaissance(): ?string
+    {
+        return $this->liauNaissance;
+    }
+
+    public function setLiauNaissance(?string $liauNaissance): static
+    {
+        $this->liauNaissance = $liauNaissance;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getEtablissement(): ?string
+    {
+        return $this->etablissement;
+    }
+
+    public function setEtablissement(?string $etablissement): static
+    {
+        $this->etablissement = $etablissement;
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?string $statut): static
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getPstChu(): ?string
+    {
+        return $this->pstChu;
+    }
+
+    public function setPstChu(?string $pstChu): static
+    {
+        $this->pstChu = $pstChu;
+
+        return $this;
+    }
+
+    public function getDateSoutenance(): ?string
+    {
+        return $this->dateSoutenance;
+    }
+
+    public function setDateSoutenance(?string $dateSoutenance): static
+    {
+        $this->dateSoutenance = $dateSoutenance;
+
+        return $this;
+    }
+
+    public function getNumDoc(): ?string
+    {
+        return $this->numDoc;
+    }
+
+    public function setNumDoc(?string $numDoc): static
+    {
+        $this->numDoc = $numDoc;
+
+        return $this;
+    }
+
+    public function getDateInscription(): ?string
+    {
+        return $this->dateInscription;
+    }
+
+    public function setDateInscription(?string $dateInscription): static
+    {
+        $this->dateInscription = $dateInscription;
+
+        return $this;
+    }
+
+    public function getValide(): ?string
+    {
+        return $this->valide;
+    }
+
+    public function setValide(?string $valide): static
+    {
+        $this->valide = $valide;
 
         return $this;
     }
