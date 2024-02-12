@@ -64,4 +64,28 @@ class PostRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    public function findTotal() {
+
+        $query="SELECT SUM(nbr_reste) as total FROM `post`";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAssociative();  
+        return  $result ;
+
+    }
+    public function findSommeBySpecialite() {
+
+        $query="SELECT `specialite_id`, SUM(nbr_reste) as somme FROM `post` GROUP BY `specialite_id`";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAllAssociative();
+        return  $result ;
+
+    }
+
+    public function findSommeByType(){
+        $query="SELECT T.intitule, SUM(nbr_reste) as somme FROM post P INNER JOIN specialite S ON P.specialite_id = S.id INNER JOIN type T ON T.id = S.type_id GROUP BY `type_id`";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAllAssociative();
+        return  $result ;
+    }
 }
