@@ -46,22 +46,35 @@ class DashboardController extends AbstractController
 
 
 
-       // dd($posts);
+       //dd($posts);
 
        $table = [];
-
         foreach( $posts as $post){
-           
             $table[$post->getSpecialite()->getId()][$post->getCategorie()->getId()] = $post->getNbrPost();
 
         }
-       // dd($table);
+
+        $table[0][0] = $this->postRepository->findTotal()['total'];
+        $reception = $this->postRepository->findSommeBySpecialite();
+
+        $totalBySpecialite = [];
+        $totalByType = $this->postRepository->findSommeByType();
+
+        foreach($reception as $tableSomme){
+            $totalBySpecialite[$tableSomme["specialite_id"]] = $tableSomme["somme"];
+        }
+
+        //dd($type.specialites);
       
 
         return $this->render('dashboard/index.html.twig', [
             'posts' => $table,
             'types' => $types,
             'categories' => $categories,
+            'totalBySpecialite' => $totalBySpecialite,
+            'totalByType' => $totalByType,
         ]);
     }
+
+    
 }
