@@ -53,13 +53,16 @@ class CandidateController extends AbstractController
         $type = $this->TypeRepository->findAll();
         $candidatList2 = $this->PostRepository->findAll();
         $categorie = $this->categorieRepository->findAll();
-        $candidatList1 = $this->specialiteRepository->findAll();
+        $candidatList1 = [];
+        foreach ($candidatList2 as $post)
+            if ($post->getNbrReste() > 0 and !in_array($post->getSpecialite(), $candidatList1)) {
+                $candidatList1[] = $post->getSpecialite();
+            }
+
         $candidatList = $this->candidateRepository->findBy([
             'Specialite' => null,
             'valide' => 'V'
         ]);
-
-
 
         return $this->render('candidate/index.html.twig', [
             'candidat_list' => $candidatList,
@@ -75,13 +78,20 @@ class CandidateController extends AbstractController
     #[Route('/candidate/update/{id}/{id1}/{id2}', name: 'update_candidate', methods: 'POST')]
     public function update(Request $request, $id, $id1, $id2): Response
     {
+
         $condidat = $this->candidateRepository->find($id);
         $specialite = $this->specialiteRepository->find($id1);
         $categorie = $this->categorieRepository->find($id2);
         $condidat->setSpecialite($specialite)
             ->setCategorie($categorie);
+        $post = $this->PostRepository->findOneBy([
 
+            'Specialite' => $condidat->getSpecialite(),
+            'categorie' => $condidat->getCategorie(),
+        ]);
+        $post->setNbrReste($post->getNbrReste() - 1);
         $this->manager->persist($condidat);
+        $this->manager->persist($post);
         $this->manager->flush();
         return new Response('updated');
     }
@@ -144,7 +154,25 @@ class CandidateController extends AbstractController
 
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html),
-            'file.pdf'
+            'PV.pdf'
+        );
+    }
+
+
+    #[Route('/candidate/Attestation/{id}', name: 'candidate_PDf_attestation', methods: 'get')]
+    public function pdfActionAttestation(Pdf $knpSnappyPdf, $id)
+    {
+        $condidat = $this->candidateRepository->find($id);
+
+
+        $html = $this->renderView('candidate/Attestation.html.twig', array(
+            'Candidate'  => $condidat
+
+        ));
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'Attestation ' . $condidat->getCIN() . '.pdf'
         );
     }
 }

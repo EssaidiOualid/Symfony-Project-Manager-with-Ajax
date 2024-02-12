@@ -85,6 +85,12 @@ class Candidate
     #[ORM\Column(length: 5, nullable: true)]
     private ?string $valide = null;
 
+    #[ORM\ManyToOne(inversedBy: 'candidates')]
+    private ?Session $Session = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $Rang = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -362,6 +368,30 @@ class Candidate
     public function setValide(?string $valide): static
     {
         $this->valide = $valide;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->Session;
+    }
+
+    public function setSession(?Session $Session): static
+    {
+        $this->Session = $Session;
+
+        return $this;
+    }
+
+    public function getRang(): ?int
+    {
+        return $this->Rang;
+    }
+
+    public function setRang(?int $Rang): static
+    {
+        $this->Rang = $Rang;
 
         return $this;
     }

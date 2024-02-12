@@ -1,0 +1,31 @@
+{% block title %}Hello CandidateController!
+{% endblock %}
+
+{% block content %}
+	<h3 class="card-header">Attestation</h3>
+
+
+	<p>Cin:
+		{{ Candidat.cin }}</p>
+	<p>NOM:
+		{{ Candidat.nom }}</p>
+
+
+	<p>Prenom:
+		{{ Candidat.prenom }}</p>
+
+	<p>type:
+		{{ Candidat.type.intitule }}</p>
+
+
+	<p>Specialite:
+		{{ Candidat.Specialite.intitule }}</p>
+
+	<p>categorie:
+		{{ Candidat.categorie.intitule }}</p>
+	<p>Duree de Formation :
+		{{ Candidat.Specialite.DureeFormation }}
+		Annee</p>
+
+
+{% endblock %}
