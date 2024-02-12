@@ -28,9 +28,13 @@ class Session
     #[ORM\Column]
     private ?bool $active = null;
 
+    #[ORM\OneToMany(mappedBy: 'Session', targetEntity: Candidate::class)]
+    private Collection $candidates;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->candidates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,6 +104,36 @@ class Session
     public function setActive(bool $active): static
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Candidate>
+     */
+    public function getCandidates(): Collection
+    {
+        return $this->candidates;
+    }
+
+    public function addCandidate(Candidate $candidate): static
+    {
+        if (!$this->candidates->contains($candidate)) {
+            $this->candidates->add($candidate);
+            $candidate->setSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidate(Candidate $candidate): static
+    {
+        if ($this->candidates->removeElement($candidate)) {
+            // set the owning side to null (unless already changed)
+            if ($candidate->getSession() === $this) {
+                $candidate->setSession(null);
+            }
+        }
 
         return $this;
     }

@@ -59,14 +59,13 @@
 											<select class="form-select" id="Specialite_{{ Candidat.id }}">
 
 
-												{% for Post in post_list %}
-													{% if (Post.Specialite.type.intitule == type.intitule  and Post.nbrreste > 0)  %}
+												{% for Specialite in Specialite_list %}
 
-														<option value="{{ Post.Specialite.id }}" id="categorie_{{ Candidat.id }}_{{ Post.Specialite.id }}">{{ Post.Specialite.intitule }}</option>
+													{% if Specialite.type == type %}
 
+														<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}">{{ Specialite.intitule }}</option>
 
 													{% endif %}
-
 												{% endfor %}
 											</select>
 										</td>
@@ -83,7 +82,7 @@
 											{% else %}
 												<select class="form-select" id="categorie_{{ Candidat.id }}">
 													{% for categorie in categorie_list %}
-														{% if categorie.intitule != 'benevole etranger' %}
+														{% if categorie.intitule != 'Benevole etranger' %}
 
 
 															<option value="{{ categorie.id }}" id="categorie_{{ Candidat.id }}_{{ categorie.id }}">{{categorie.intitule}}</option>
@@ -125,52 +124,52 @@
 	</div>
 	{% block javascript %}
 		{#}		<script>
-																							console.log("fields");
-																				
-																				// set active page
-																				$('#candidate').toggleClass('active');
-																						</script>
-																				
-																				
-																						<script>
-																				
-																				
-																							/* $("#Specialite_".concat(id))[0].value,
-																				$("#categorie_".concat(id))[0].value
-																				];
-																				 */
-																				
-																				$(document).on('click', '.edit_client_btn', function () {
-																				
-																				let id = $(this).data('id');
-																				let url = "{{ path('update_candidate', {id: 'p_id',id1:'p_id1',id2:'p_id2'}) }}";
-																				
-																				$.ajax({
-																				url: url.replace('p_id', id).replace('p_id1', $("#Specialite_".concat(id))[0].value).replace('p_id2', $("#categorie_".concat(id))[0].value);
-																				
-																				method: 'POST',
-																				data: $(this).serialize();
-																				}).then((response) => {
-																				if (response == "updated") {
-																				Swal.fire({
-																				icon: 'success',
-																				title: 'Updated',
-																				text: 'The candidate has been updated.',
-																				confirmButtonColor: '#3085d6',
-																				confirmButtonText: 'OK',
-																				timer: 1000
-																				}).then(function () {
-																				setTimeout(function () {
-																				location.reload()
-																				}, 500);
-																				});
-																				}
-																				
-																				})
-																				
-																				})
-																				
-																						</script>#}
+																																																	console.log("fields");
+																																														
+																																														// set active page
+																																														$('#candidate').toggleClass('active');
+																																																</script>
+																																														
+																																														
+																																																<script>
+																																														
+																																														
+																																																	/* $("#Specialite_".concat(id))[0].value,
+																																														$("#categorie_".concat(id))[0].value
+																																														];
+																																														 */
+																																														
+																																														$(document).on('click', '.edit_client_btn', function () {
+																																														
+																																														let id = $(this).data('id');
+																																														let url = "{{ path('update_candidate', {id: 'p_id',id1:'p_id1',id2:'p_id2'}) }}";
+																																														
+																																														$.ajax({
+																																														url: url.replace('p_id', id).replace('p_id1', $("#Specialite_".concat(id))[0].value).replace('p_id2', $("#categorie_".concat(id))[0].value);
+																																														
+																																														method: 'POST',
+																																														data: $(this).serialize();
+																																														}).then((response) => {
+																																														if (response == "updated") {
+																																														Swal.fire({
+																																														icon: 'success',
+																																														title: 'Updated',
+																																														text: 'The candidate has been updated.',
+																																														confirmButtonColor: '#3085d6',
+																																														confirmButtonText: 'OK',
+																																														timer: 1000
+																																														}).then(function () {
+																																														setTimeout(function () {
+																																														location.reload()
+																																														}, 500);
+																																														});
+																																														}
+																																														
+																																														})
+																																														
+																																														})
+																																														
+																																																</script>#}
 
 
 		<script>
