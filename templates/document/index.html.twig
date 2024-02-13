@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<h4 class="fw-bold py-3 mb-4">
+		Teams management
+	</h4>
+	<div class="d-grid gap-2 col-6 mx-auto">
+
+		<h6 style=" text-align:center;">Télécharger Pv Vide</h6>
+		<a href="{{path('candidate_PDf')}}" class="btn btn-success ">Telecharger PV
+		</a>
+	</div>
+
+	<div class="d-grid gap-2 col-6 mx-auto">
+
+
+		<h6 style="text-align:center;">Télécharger Pv
+
+		</h6>
+		<a href="{{path('candidate_PDf')}}" class="btn btn-success">Telecharger PV
+
+
+		</a>
+
+	</div>
+{% endblock %}

@@ -1,163 +1,159 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    {% set taskCounts = {} %}
-	<div id="data" class="d-none" data-task-counts="" ></div>
+	{% set taskCounts = {} %}
+	<div id="data" class="d-none" data-task-counts=""></div>
 	<div class="row gy-4">
-	{% for type in totalByType %}
-		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-			<div class="card h-100">
-				<div class="card-body">
-					<i class="bx bx-user text-dark mb-1 fs-2"></i>
-					<h3 class="card-title mb-2">{{type.intitule|upper|slice(12,15)}}</h3>
-					<h4 class="fw-semibold d-block mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
+		{% for type in totalByType %}
+			<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+				<div class="card h-100">
+					<div class="card-body">
+						<i class="bx bx-user text-dark mb-1 fs-2"></i>
+						<h3 class="card-title mb-2">{{type.intitule|upper}}</h3>
+						<h4 class="fw-semibold d-block mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
+					</div>
 				</div>
 			</div>
-		</div>
-		{% endfor %} 
+		{% endfor %}
 		<!--<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-			<div class="card h-100">
-				<div class="card-body">
-					<i class="bx bxs-user text-info mb-1 fs-2"></i>
-					<span class="fw-semibold d-block mb-1">Registred
-						<br/>
-						Members</span>
-					<h3 class="card-title text-info mb-2">Registred</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-			<div class="card h-100">
-				<div class="card-body">
-					<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
-					<span class="fw-semibold d-block mb-1">Number of<br>
-						Projects</span>
-					<h3 class="card-title mb-2">Number of</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
-			<div class="card h-100">
-				<div class="card-body">
-					<i class="bx bx-check-square text-success mb-1 fs-2"></i>
-					<span class="fw-semibold d-block mb-1">Finished
-						<br/>
-						Projects</span>
-					<h3 class="card-title text-success mb-2">Finished</h3>
-				</div>
-			</div>
-		</div>-->
+											<div class="card h-100">
+												<div class="card-body">
+													<i class="bx bxs-user text-info mb-1 fs-2"></i>
+													<span class="fw-semibold d-block mb-1">Registred
+														<br/>
+														Members</span>
+													<h3 class="card-title text-info mb-2">Registred</h3>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+											<div class="card h-100">
+												<div class="card-body">
+													<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
+													<span class="fw-semibold d-block mb-1">Number of<br>
+														Projects</span>
+													<h3 class="card-title mb-2">Number of</h3>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
+											<div class="card h-100">
+												<div class="card-body">
+													<i class="bx bx-check-square text-success mb-1 fs-2"></i>
+													<span class="fw-semibold d-block mb-1">Finished
+														<br/>
+														Projects</span>
+													<h3 class="card-title text-success mb-2">Finished</h3>
+												</div>
+											</div>
+										</div>-->
 		{% for type in types %}
 			<h2>{{ type.intitule }}</h2>
-			<table id= "{{type.intitule|upper|slice(12,15)}}" class="table">
+			<table id="{{type.intitule|upper}}" class="table">
 				<thead>
 					<tr>
 						<th scope="col">Spécialité</th>
-						<th scope="col">Contrat</th>
-						<th scope="col">Benevole marocains</th>
-						<th scope="col">Benevole étrangers</th>
-						<th scope="col">CHU</th>
+						{% for categorie in categories %}
+
+							<th scope="col">{{categorie.intitule}}</th>
+
+
+						{% endfor %}
+
+
 						<th scope="col">Total</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for specialite in type.specialites %}
-					<tr>
-						<td>{{specialite.intitule}}</td>
-						{% for categorie in categories %}
-							{% if posts[specialite.id][categorie.id] is defined %}
-							<td>{{posts[specialite.id][categorie.id]}}</td>
+						<tr>
+							<td>{{specialite.intitule}}</td>
+							{% for categorie in categories %}
+								{% if posts[specialite.id][categorie.id] is defined %}
+									<td>{{posts[specialite.id][categorie.id]}}</td>
+								{% endif %}
+								{% if posts[specialite.id][categorie.id] is not defined %}
+									<td>0</td>
+								{% endif %}
+							{% endfor %}
+							{% if totalBySpecialite[specialite.id] is defined %}
+								<td>{{totalBySpecialite[specialite.id]}}</td>
 							{% endif %}
-							{% if posts[specialite.id][categorie.id] is not defined %}
-							<td>0</td>
+							{% if totalBySpecialite[specialite.id] is not defined %}
+								<td>0</td>
 							{% endif %}
-						{% endfor %}
-						{% if totalBySpecialite[specialite.id] is defined %}
-							<td>{{totalBySpecialite[specialite.id]}}</td>
-						{% endif %}
-						{% if totalBySpecialite[specialite.id] is not defined %}
-							<td>0</td>
-						{% endif %}
-					</tr>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-		<!--<nav aria-label="..." id="pagination">
-			<ul class="pagination">
-			</ul>
-		</nav>-->
+			<!--<nav aria-label="..." id="pagination">
+															<ul class="pagination">
+															</ul>
+														</nav>-->
 		{% endfor %}
-	<script src="{{ asset('assets/js/pagination.js') }}"></script>	
-    <script src="{{ asset('assets/js/chart.js') }}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script>
-	axios.get('http://127.0.0.1:8000/posts/get')
-	.then(function (response) {
-		// en cas de réussite de la requête
-		console.log(response.data);
-	})
-	.catch(function (error) {
-		// en cas d’échec de la requête
-		console.log(error);
-	})
-	.finally(function () {
-		// dans tous les cas
-	});
-	// Fonction pour extraire les données d'une table HTML et les stocker dans un tableau d'objets
-		function extractTableData(table) {
-		var data = [];
-		var headers = [];
-	// Récupérer les en-têtes de colonne
-		table.querySelectorAll('th').forEach(function(header) {
-			headers.push(header.textContent.trim());
-		});
-	// Récupérer les lignes de données
-		table.querySelectorAll('tbody tr').forEach(function(row) {
-			var rowData = {};
-			row.querySelectorAll('td').forEach(function(cell, index) {
-			rowData[headers[index]] = cell.textContent.trim();
-			});
-			data.push(rowData);
-		});
-		return data;
-		}
+		<script src="{{ asset('assets/js/pagination.js') }}"></script>
+		<script src="{{ asset('assets/js/chart.js') }}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script>
+			axios.get('http://127.0.0.1:8000/posts/get').then(function (response) { // en cas de réussite de la requête
+console.log(response.data);
+}).catch(function (error) { // en cas d’échec de la requête
+console.log(error);
+}). finally(function () { // dans tous les cas
+});
+// Fonction pour extraire les données d'une table HTML et les stocker dans un tableau d'objets
+function extractTableData(table) {
+var data = [];
+var headers = [];
+// Récupérer les en-têtes de colonne
+table.querySelectorAll('th').forEach(function (header) {
+headers.push(header.textContent.trim());
+});
+// Récupérer les lignes de données
+table.querySelectorAll('tbody tr').forEach(function (row) {
+var rowData = {};
+row.querySelectorAll('td').forEach(function (cell, index) {
+rowData[headers[index]] = cell.textContent.trim();
+});
+data.push(rowData);
+});
+return data;
+}
 
-	// Fonction pour injecter les données d'un tableau d'objets dans une table HTML
-		function injectDataIntoTable(data, table) {
-		var tbody = table.querySelector('tbody');
-		tbody.innerHTML = ''; // Effacer le contenu actuel de la table
-		data.forEach(function(item) {
-			var row = document.createElement('tr');
-			Object.values(item).forEach(function(value) {
-			var cell = document.createElement('td');
-			cell.textContent = value;
-			row.appendChild(cell);
-			});
-			tbody.appendChild(row);
-		});
-		}
+// Fonction pour injecter les données d'un tableau d'objets dans une table HTML
+function injectDataIntoTable(data, table) {
+var tbody = table.querySelector('tbody');
+tbody.innerHTML = ''; // Effacer le contenu actuel de la table
+data.forEach(function (item) {
+var row = document.createElement('tr');
+Object.values(item).forEach(function (value) {
+var cell = document.createElement('td');
+cell.textContent = value;
+row.appendChild(cell);
+});
+tbody.appendChild(row);
+});
+}
 
-	// Extraire les données des tables HTML
-		var medical = extractTableData(document.getElementById('MÉDICALES'));
-		console.log(medical);
-		var chiru = extractTableData(document.getElementById('CHIRURGICALES'));
-		console.log(chiru);
-		var bio = extractTableData(document.getElementById('BIOLOGIQUES'));
-		console.log(bio);
-		var Pharma = extractTableData(document.getElementById('PHARMACEUTIQUES'));
-		console.log(Pharma);
+// Extraire les données des tables HTML
+var medical = extractTableData(document.getElementById('MÉDICALES'));
+console.log(medical);
+var chiru = extractTableData(document.getElementById('CHIRURGICALES'));
+console.log(chiru);
+var bio = extractTableData(document.getElementById('BIOLOGIQUES'));
+console.log(bio);
+var Pharma = extractTableData(document.getElementById('PHARMACEUTIQUES'));
+console.log(Pharma);
 
-	// Injecter les données extraites dans d'autres tables HTML
-		injectDataIntoTable(medical, document.getElementById('MÉDICALES'));
-		injectDataIntoTable(chiru, document.getElementById('CHIRURGICALES'));
-		injectDataIntoTable(bio, document.getElementById('BIOLOGIQUES'));
-		injectDataIntoTable(Pharma, document.getElementById('PHARMACEUTIQUES'));
+// Injecter les données extraites dans d'autres tables HTML
+injectDataIntoTable(medical, document.getElementById('MÉDICALES'));
+injectDataIntoTable(chiru, document.getElementById('CHIRURGICALES'));
+injectDataIntoTable(bio, document.getElementById('BIOLOGIQUES'));
+injectDataIntoTable(Pharma, document.getElementById('PHARMACEUTIQUES'));
 
 
-	// fonction de mise a jour automatique avec la base de donées
+// fonction de mise a jour automatique avec la base de donées
 
-	function updateArrayData(){
-
-	}
-	</script>
-{% endblock %}
+function updateArrayData() {}
+		</script>
+	{% endblock %}

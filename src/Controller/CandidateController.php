@@ -13,6 +13,7 @@ use App\Repository\CategorieRepository;
 
 use App\Repository\SpecialiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\OrderBy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,12 +55,14 @@ class CandidateController extends AbstractController
         $candidatList2 = $this->PostRepository->findAll();
         $categorie = $this->categorieRepository->findAll();
         $candidatList1 = [];
+        $spC = $this->specialiteRepository->findAllSpecialiteContra();
+        $spB = $this->specialiteRepository->findAllSpecialiteB();
         foreach ($candidatList2 as $post)
             if ($post->getNbrReste() > 0 and !in_array($post->getSpecialite(), $candidatList1)) {
                 $candidatList1[] = $post->getSpecialite();
             }
 
-        $candidatList = $this->candidateRepository->findBy([
+        $candidatList = $this->candidateRepository->findAllCandidateR([
             'Specialite' => null,
             'valide' => 'V'
         ]);
@@ -69,7 +72,9 @@ class CandidateController extends AbstractController
             'Specialite_list' => $candidatList1,
             'categorie_list' => $categorie,
             'post_list' => $candidatList2,
-            'type_list' => $type
+            'type_list' => $type,
+            'spC' => $spC,
+            'spB' => $spB
         ]);
 
         return $this->render('candidate/index.html.twig')->getContent();
@@ -165,7 +170,7 @@ class CandidateController extends AbstractController
         $condidat = $this->candidateRepository->find($id);
 
 
-        $html = $this->renderView('candidate/Attestation.html.twig', array(
+        $html = $this->renderView('candidate/attestation.html.twig', array(
             'Candidate'  => $condidat
 
         ));

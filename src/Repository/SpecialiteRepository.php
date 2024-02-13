@@ -21,28 +21,55 @@ class SpecialiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Specialite::class);
     }
 
-//    /**
-//     * @return Specialite[] Returns an array of Specialite objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Specialite[] Returns an array of Specialite objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Specialite
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Specialite
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
+
+    /**
+     * @return Specialite[]
+     */
+    public function findAllSpecialiteContra(): array
+    {
+
+
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.posts', 'posts')
+            ->andWhere('posts.Categorie = 2')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return Specialite[]
+     */
+    public function findAllSpecialiteB(): array
+    {
+
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.posts', 'posts')
+            ->andWhere('posts.Categorie = 1')
+            ->getQuery()
+            ->execute();
+    }
 }
