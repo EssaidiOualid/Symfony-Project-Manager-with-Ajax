@@ -62,10 +62,7 @@ class CandidateController extends AbstractController
                 $candidatList1[] = $post->getSpecialite();
             }
 
-        $candidatList = $this->candidateRepository->findAllCandidateR([
-            'Specialite' => null,
-            'valide' => 'V'
-        ]);
+        $candidatList = $this->candidateRepository->findAllCandidateR();
 
         return $this->render('candidate/index.html.twig', [
             'candidat_list' => $candidatList,
@@ -83,20 +80,23 @@ class CandidateController extends AbstractController
     #[Route('/candidate/update/{id}/{id1}/{id2}', name: 'update_candidate', methods: 'POST')]
     public function update(Request $request, $id, $id1, $id2): Response
     {
-
         $condidat = $this->candidateRepository->find($id);
         $specialite = $this->specialiteRepository->find($id1);
         $categorie = $this->categorieRepository->find($id2);
         $condidat->setSpecialite($specialite)
             ->setCategorie($categorie);
-        $post = $this->PostRepository->findOneBy([
+        if ($specialite->getIntitule() != 'sans choix') {
+            $post = $this->PostRepository->findOneBy([
 
-            'Specialite' => $condidat->getSpecialite(),
-            'categorie' => $condidat->getCategorie(),
-        ]);
-        $post->setNbrReste($post->getNbrReste() - 1);
+                'Specialite' => $specialite,
+                'Categorie' => $categorie,
+            ]);
+
+            $post->setNbrReste($post->getNbrReste() - 1);
+            $this->manager->persist($post);
+        }
         $this->manager->persist($condidat);
-        $this->manager->persist($post);
+
         $this->manager->flush();
         return new Response('updated');
     }
