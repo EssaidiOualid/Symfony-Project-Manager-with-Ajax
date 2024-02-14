@@ -504,3 +504,6 @@ textarea {
 .message-container {
   height: 500px;
 }
+.redLine{
+  background-color: #ffa2b2;
+}

@@ -16,37 +16,37 @@
 			</div>
 		{% endfor %}
 		<!--<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-											<div class="card h-100">
-												<div class="card-body">
-													<i class="bx bxs-user text-info mb-1 fs-2"></i>
-													<span class="fw-semibold d-block mb-1">Registred
-														<br/>
-														Members</span>
-													<h3 class="card-title text-info mb-2">Registred</h3>
+													<div class="card h-100">
+														<div class="card-body">
+															<i class="bx bxs-user text-info mb-1 fs-2"></i>
+															<span class="fw-semibold d-block mb-1">Registred
+																<br/>
+																Members</span>
+															<h3 class="card-title text-info mb-2">Registred</h3>
+														</div>
+													</div>
 												</div>
-											</div>
-										</div>
-										<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-											<div class="card h-100">
-												<div class="card-body">
-													<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
-													<span class="fw-semibold d-block mb-1">Number of<br>
-														Projects</span>
-													<h3 class="card-title mb-2">Number of</h3>
+												<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+													<div class="card h-100">
+														<div class="card-body">
+															<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
+															<span class="fw-semibold d-block mb-1">Number of<br>
+																Projects</span>
+															<h3 class="card-title mb-2">Number of</h3>
+														</div>
+													</div>
 												</div>
-											</div>
-										</div>
-										<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
-											<div class="card h-100">
-												<div class="card-body">
-													<i class="bx bx-check-square text-success mb-1 fs-2"></i>
-													<span class="fw-semibold d-block mb-1">Finished
-														<br/>
-														Projects</span>
-													<h3 class="card-title text-success mb-2">Finished</h3>
-												</div>
-											</div>
-										</div>-->
+												<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
+													<div class="card h-100">
+														<div class="card-body">
+															<i class="bx bx-check-square text-success mb-1 fs-2"></i>
+															<span class="fw-semibold d-block mb-1">Finished
+																<br/>
+																Projects</span>
+															<h3 class="card-title text-success mb-2">Finished</h3>
+														</div>
+													</div>
+												</div>-->
 		{% for type in types %}
 			<h2>{{ type.intitule }}</h2>
 			<table id="{{type.intitule|upper}}" class="table">
@@ -87,9 +87,9 @@
 				</tbody>
 			</table>
 			<!--<nav aria-label="..." id="pagination">
-															<ul class="pagination">
-															</ul>
-														</nav>-->
+																		<ul class="pagination">
+																		</ul>
+																	</nav>-->
 		{% endfor %}
 		<script src="{{ asset('assets/js/pagination.js') }}"></script>
 		<script src="{{ asset('assets/js/chart.js') }}"></script>
@@ -119,13 +119,15 @@ data.push(rowData);
 });
 return data;
 }
-
 // Fonction pour injecter les données d'un tableau d'objets dans une table HTML
 function injectDataIntoTable(data, table) {
 var tbody = table.querySelector('tbody');
 tbody.innerHTML = ''; // Effacer le contenu actuel de la table
 data.forEach(function (item) {
 var row = document.createElement('tr');
+if (item.Total == 0) 
+row.setAttribute("style", "background-color: #ffa2b2;")
+
 Object.values(item).forEach(function (value) {
 var cell = document.createElement('td');
 cell.textContent = value;
