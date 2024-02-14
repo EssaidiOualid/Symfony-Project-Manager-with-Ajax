@@ -91,51 +91,57 @@
 																		</ul>
 																	</nav>-->
 		{% endfor %}
-		<script src="{{ asset('assets/js/pagination.js') }}"></script>
-		<script src="{{ asset('assets/js/chart.js') }}"></script>
-		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-		<script>
-			axios.get('http://127.0.0.1:8000/posts/get').then(function (response) { // en cas de réussite de la requête
-console.log(response.data);
-}).catch(function (error) { // en cas d’échec de la requête
-console.log(error);
-}). finally(function () { // dans tous les cas
-});
-// Fonction pour extraire les données d'une table HTML et les stocker dans un tableau d'objets
-function extractTableData(table) {
-var data = [];
-var headers = [];
-// Récupérer les en-têtes de colonne
-table.querySelectorAll('th').forEach(function (header) {
-headers.push(header.textContent.trim());
-});
-// Récupérer les lignes de données
-table.querySelectorAll('tbody tr').forEach(function (row) {
-var rowData = {};
-row.querySelectorAll('td').forEach(function (cell, index) {
-rowData[headers[index]] = cell.textContent.trim();
-});
-data.push(rowData);
-});
-return data;
-}
-// Fonction pour injecter les données d'un tableau d'objets dans une table HTML
-function injectDataIntoTable(data, table) {
-var tbody = table.querySelector('tbody');
-tbody.innerHTML = ''; // Effacer le contenu actuel de la table
-data.forEach(function (item) {
-var row = document.createElement('tr');
-if (item.Total == 0) 
-row.setAttribute("style", "background-color: #ffa2b2;")
+	<script src="{{ asset('assets/js/pagination.js') }}"></script>	
+    <script src="{{ asset('assets/js/chart.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+	axios.get('http://127.0.0.1:8000/posts/get')
+	.then(function (response) {
+		// en cas de réussite de la requête
+		console.log(response.data);
+	})
+	.catch(function (error) {
+		// en cas d’échec de la requête
+		console.log(error);
+	})
+	.finally(function () {
+		// dans tous les cas
+	});
+	// Fonction pour extraire les données d'une table HTML et les stocker dans un tableau d'objets
+		function extractTableData(table) {
+		var data = [];
+		var headers = [];
+	// Récupérer les en-têtes de colonne
+		table.querySelectorAll('th').forEach(function(header) {
+			headers.push(header.textContent.trim());
+		});
+	// Récupérer les lignes de données
+		table.querySelectorAll('tbody tr').forEach(function(row) {
+			var rowData = {};
+			row.querySelectorAll('td').forEach(function(cell, index) {
+			rowData[headers[index]] = cell.textContent.trim();
+			});
+			data.push(rowData);
+		});
+		return data;
+		}
 
-Object.values(item).forEach(function (value) {
-var cell = document.createElement('td');
-cell.textContent = value;
-row.appendChild(cell);
-});
-tbody.appendChild(row);
-});
-}
+	// Fonction pour injecter les données d'un tableau d'objets dans une table HTML
+		function injectDataIntoTable(data, table) {
+		var tbody = table.querySelector('tbody');
+		tbody.innerHTML = ''; // Effacer le contenu actuel de la table
+		data.forEach(function(item) {
+			var row = document.createElement('tr');
+			if(item.Total == 0)
+			row.setAttribute("style","background-color: #ffa2b2;")
+			Object.values(item).forEach(function(value) {
+			var cell = document.createElement('td');
+			cell.textContent = value;
+			row.appendChild(cell);
+			});
+			tbody.appendChild(row);
+		});
+		}
 
 // Extraire les données des tables HTML
 var medical = extractTableData(document.getElementById('MÉDICALES'));
