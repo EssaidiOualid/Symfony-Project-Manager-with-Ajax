@@ -1,95 +1,91 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-	{% set taskCounts = {} %}
-	<div id="data" class="d-none" data-task-counts=""></div>
+    {% set taskCounts = {} %}
+	<div id="data" class="d-none" data-task-counts="" ></div>
 	<div class="row gy-4">
-		{% for type in totalByType %}
-			<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-				<div class="card h-100">
-					<div class="card-body">
-						<i class="bx bx-user text-dark mb-1 fs-2"></i>
-						<h3 class="card-title mb-2">{{type.intitule|upper}}</h3>
-						<h4 class="fw-semibold d-block mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-					</div>
+	{% for type in totalByType %}
+		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bx-user text-dark mb-1 fs-2"></i>
+					<h3 class="card-title mb-2">{{type.intitule|upper|slice(12,15)}}</h3>
+					<h4 class="fw-semibold d-block mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 				</div>
 			</div>
-		{% endfor %}
+		</div>
+		{% endfor %} 
 		<!--<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-													<div class="card h-100">
-														<div class="card-body">
-															<i class="bx bxs-user text-info mb-1 fs-2"></i>
-															<span class="fw-semibold d-block mb-1">Registred
-																<br/>
-																Members</span>
-															<h3 class="card-title text-info mb-2">Registred</h3>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
-													<div class="card h-100">
-														<div class="card-body">
-															<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
-															<span class="fw-semibold d-block mb-1">Number of<br>
-																Projects</span>
-															<h3 class="card-title mb-2">Number of</h3>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
-													<div class="card h-100">
-														<div class="card-body">
-															<i class="bx bx-check-square text-success mb-1 fs-2"></i>
-															<span class="fw-semibold d-block mb-1">Finished
-																<br/>
-																Projects</span>
-															<h3 class="card-title text-success mb-2">Finished</h3>
-														</div>
-													</div>
-												</div>-->
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bxs-user text-info mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Registred
+						<br/>
+						Members</span>
+					<h3 class="card-title text-info mb-2">Registred</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bx-question-mark text-dark mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Number of<br>
+						Projects</span>
+					<h3 class="card-title mb-2">Number of</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 text-center col-md-4 col-6 mini-card">
+			<div class="card h-100">
+				<div class="card-body">
+					<i class="bx bx-check-square text-success mb-1 fs-2"></i>
+					<span class="fw-semibold d-block mb-1">Finished
+						<br/>
+						Projects</span>
+					<h3 class="card-title text-success mb-2">Finished</h3>
+				</div>
+			</div>
+		</div>-->
 		{% for type in types %}
 			<h2>{{ type.intitule }}</h2>
-			<table id="{{type.intitule|upper}}" class="table">
+			<table id= "{{type.intitule|upper|slice(12,15)}}" class="table">
 				<thead>
 					<tr>
 						<th scope="col">Spécialité</th>
-						{% for categorie in categories %}
-
-							<th scope="col">{{categorie.intitule}}</th>
-
-
-						{% endfor %}
-
-
+						<th scope="col">Contrat</th>
+						<th scope="col">Benevole marocains</th>
+						<th scope="col">Benevole étrangers</th>
+						<th scope="col">CHU</th>
 						<th scope="col">Total</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for specialite in type.specialites %}
-						<tr>
-							<td>{{specialite.intitule}}</td>
-							{% for categorie in categories %}
-								{% if posts[specialite.id][categorie.id] is defined %}
-									<td>{{posts[specialite.id][categorie.id]}}</td>
-								{% endif %}
-								{% if posts[specialite.id][categorie.id] is not defined %}
-									<td>0</td>
-								{% endif %}
-							{% endfor %}
-							{% if totalBySpecialite[specialite.id] is defined %}
-								<td>{{totalBySpecialite[specialite.id]}}</td>
+					<tr>
+						<td>{{specialite.intitule}}</td>
+						{% for categorie in categories %}
+							{% if posts[specialite.id][categorie.id] is defined %}
+							<td>{{posts[specialite.id][categorie.id]}}</td>
 							{% endif %}
-							{% if totalBySpecialite[specialite.id] is not defined %}
-								<td>0</td>
+							{% if posts[specialite.id][categorie.id] is not defined %}
+							<td>0</td>
 							{% endif %}
-						</tr>
+						{% endfor %}
+						{% if totalBySpecialite[specialite.id] is defined %}
+							<td>{{totalBySpecialite[specialite.id]}}</td>
+						{% endif %}
+						{% if totalBySpecialite[specialite.id] is not defined %}
+							<td>0</td>
+						{% endif %}
+					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<!--<nav aria-label="..." id="pagination">
-																		<ul class="pagination">
-																		</ul>
-																	</nav>-->
+		<!--<nav aria-label="..." id="pagination">
+			<ul class="pagination">
+			</ul>
+		</nav>-->
 		{% endfor %}
 	<script src="{{ asset('assets/js/pagination.js') }}"></script>	
     <script src="{{ asset('assets/js/chart.js') }}"></script>
@@ -154,15 +150,17 @@
 		console.log(Pharma);
 		console.log(Pharma);
 
-// Injecter les données extraites dans d'autres tables HTML
-injectDataIntoTable(medical, document.getElementById('MÉDICALES'));
-injectDataIntoTable(chiru, document.getElementById('CHIRURGICALES'));
-injectDataIntoTable(bio, document.getElementById('BIOLOGIQUES'));
-injectDataIntoTable(Pharma, document.getElementById('PHARMACEUTIQUES'));
+	// Injecter les données extraites dans d'autres tables HTML
+		injectDataIntoTable(medical, document.getElementById('MÉDICALES'));
+		injectDataIntoTable(chiru, document.getElementById('CHIRURGICALES'));
+		injectDataIntoTable(bio, document.getElementById('BIOLOGIQUES'));
+		injectDataIntoTable(Pharma, document.getElementById('PHARMACEUTIQUES'));
 
 
-// fonction de mise a jour automatique avec la base de donées
+	// fonction de mise a jour automatique avec la base de donées
 
-function updateArrayData() {}
-		</script>
-	{% endblock %}
+	function updateArrayData(){
+
+	}
+	</script>
+{% endblock %}
