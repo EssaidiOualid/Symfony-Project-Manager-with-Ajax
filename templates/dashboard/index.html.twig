@@ -50,9 +50,13 @@
 		{% for type in types %}
 			<h2>{{ type.intitule }}</h2>
 			<table id="{{ type.intitule|upper }}" class="table">
+			<table id="{{ type.intitule|upper }}" class="table">
 				<thead>
 					<tr>
 						<th scope="col">Spécialité</th>
+						{% for categorie in categories %}
+							<th scope="col">{{categorie.intitule}}</th>
+						{% endfor %}
 						{% for categorie in categories %}
 							<th scope="col">{{categorie.intitule}}</th>
 						{% endfor %}
