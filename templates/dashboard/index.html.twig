@@ -8,7 +8,15 @@
 			<div class="col-lg-3 text-center  col-md-4 col-6 mini-card">
 				<div class="card h-100">
 					<div class="card-body">
-						<i class="bx bx-user text-dark mb-1 fs-2"></i>
+						{% if type.intitule == "MEDICALE" %}
+							<i class="bx bx-plus-medical text-primary mb-1 fs-2"></i>
+						{% elseif type.intitule == "CHIRURGICALES" %}
+							<i class="bx bx-cut text-secondary mb-1 fs-2"></i>
+						{% elseif type.intitule == "BIOLOGIE" %}
+							<i class="bx bx-dna text-success mb-1 fs-2"></i>
+						{% elseif type.intitule == "PHARMACIE" %}
+							<i class="bx bx-test-tube text-info mb-1 fs-2"></i>
+						{% endif %}
 						<h3 class="card-title mb-2">{{type.intitule|upper}}</h3>
 						<h4 class="fw-semibold d-block mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 					</div>
@@ -50,13 +58,9 @@
 		{% for type in types %}
 			<h2>{{ type.intitule }}</h2>
 			<table id="{{ type.intitule|upper }}" class="table">
-			<table id="{{ type.intitule|upper }}" class="table">
 				<thead>
 					<tr>
 						<th scope="col">Spécialité</th>
-						{% for categorie in categories %}
-							<th scope="col">{{categorie.intitule}}</th>
-						{% endfor %}
 						{% for categorie in categories %}
 							<th scope="col">{{categorie.intitule}}</th>
 						{% endfor %}
