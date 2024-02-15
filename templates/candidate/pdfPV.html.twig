@@ -1,45 +1,61 @@
-
 {% block content %}
-	<h3 class="card-header">List des  Candidat Affecter</h3>
+
+
+	<h3 class="card-header" style="text-align:center">PV</h3>
+
 	{% for type in type_list %}
 
 
-		<h4 class="card-header text-center">{{type.intitule}}</h4>
+		<h3 style="text-align:center">{{type.intitule}}</h3>
 
 
 		<table class="table table-striped" id="client_table">
 
 
 			<thead>
-				<tr>
+				<tr scope="row">
 
-					<th style="width: 10rem;">CIN</th>
 
-					<th style="width: 10rem;">Nom</th>
+					<th scope="col" style="width: 10rem;">CIN</th>
 
-					<th style="width: 10rem;">Prenom</th>
 
-					<th style="width: 10rem;">Specialite</th>
+					<th scope="col" style="width: 10rem;">Nom</th>
 
-					<th style="width: 10rem;">categorie</th>
+
+					<th scope="col" style="width: 10rem;">Prenom</th>
+
+					<th scope="col" style="width: 10rem;">Nationalite</th>
+
+					<th scope="col" style="width: 10rem;">Specialite</th>
+
+
+					<th scope="col" style="width: 10rem;">categorie</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				{% for Candidat in candidate_list_affecter %}
 
-                        
+
 					{% if (Candidat.type.intitule == type.intitule) %}
 
 
-						<tr>
+						<tr scope="row">
 
-							<td>{{ Candidat.cin }}</td>
-							<td>{{ Candidat.nom }}</td>
-							<td>{{ Candidat.prenom }}</td>
-							<td>{{ Candidat.Specialite ? Candidat.Specialite.intitule : "NON affecter" }}</td>
 
-							<td>{{ Candidat.categorie ? Candidat.categorie.intitule : "NON affecter" }}</td>
+							<td style="text-align:center">{{ Candidat.cin }}</td>
+
+							<td style="text-align:center">{{ Candidat.nom }}</td>
+
+							<td style="text-align:center">{{ Candidat.prenom }}</td>
+
+							<td style="text-align:center">{{ Candidat.Nationnalite }}</td>
+
+
+							<td style="text-align:center">{{ Vide =='NoN' ?( Candidat.Specialite ? Candidat.Specialite.intitule : "NON affecter") : '..............'}}</td>
+
+
+							<td style="text-align:center">{{ Vide =='NoN' ?(Candidat.categorie ? Candidat.categorie.intitule : "NON affecter"):'...........' }}</td>
 
 
 						</tr>
@@ -49,8 +65,6 @@
 
 				{% endfor %}
 			</tbody>
-
-
 		</table>
 	{% endfor %}
 {% endblock %}
