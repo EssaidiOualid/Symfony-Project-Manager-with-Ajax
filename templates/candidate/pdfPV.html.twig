@@ -1,8 +1,6 @@
-{% block title %}Hello CandidateController!
-{% endblock %}
 
 {% block content %}
-	<h3 class="card-header">List des  Candidat</h3>
+	<h3 class="card-header">List des  Candidat Affecter</h3>
 	{% for type in type_list %}
 
 
@@ -28,9 +26,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for Candidat in Candidate_list %}
+				{% for Candidat in candidate_list_affecter %}
 
-
+                        
 					{% if (Candidat.type.intitule == type.intitule) %}
 
 

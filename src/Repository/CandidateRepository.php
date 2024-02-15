@@ -37,6 +37,22 @@ class CandidateRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    /**
+     * @return Candidate[]
+     */
+    public function findAllCandidate(): array
+    {
+
+
+        return $this->createQueryBuilder('C')
+            ->andWhere('C.Rang IS not null')
+            ->andWhere('C.Specialite IS NOT null')
+            ->andWhere('C.Categorie IS NOT null')
+            ->addOrderBy('C.Rang', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
+
     //    /**
     //     * @return Candidate[] Returns an array of Candidate objects
     //     */

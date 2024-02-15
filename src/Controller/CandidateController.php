@@ -85,7 +85,7 @@ class CandidateController extends AbstractController
         $categorie = $this->categorieRepository->find($id2);
         $condidat->setSpecialite($specialite)
             ->setCategorie($categorie);
-        if ($specialite->getIntitule() != 'sans choix') {
+        if ($specialite->getIntitule() != 'Sans choix') {
             $post = $this->PostRepository->findOneBy([
 
                 'Specialite' => $specialite,
@@ -145,15 +145,10 @@ class CandidateController extends AbstractController
     public function pdfAction(Pdf $knpSnappyPdf)
     {
         $type = $this->TypeRepository->findAll();
-        $candidatList = $this->candidateRepository->findBy([
-            'valide' => 'V',
-            /*  'Session' => $this->sessionRepository->findBy([
-                'active' => 1
-            ]) */
-        ]);
+        $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
 
         $html = $this->renderView('candidate/pdfPV.html.twig', array(
-            'Candidate_list'  => $candidatList,
+            'candidate_list_affecter' => $candidatListA,
             'type_list' => $type
         ));
 
