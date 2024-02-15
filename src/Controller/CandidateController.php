@@ -141,20 +141,21 @@ class CandidateController extends AbstractController
         return new JsonResponse($newArray);
     }
 
-    #[Route('/candidate/pdf', name: 'candidate_PDf', methods: 'get')]
-    public function pdfAction(Pdf $knpSnappyPdf)
+    #[Route('/candidate/pdf/{vide}', name: 'candidate_PDf', methods: 'get')]
+    public function pdfAction(Pdf $knpSnappyPdf, $vide = 'NoN')
     {
         $type = $this->TypeRepository->findAll();
         $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
 
         $html = $this->renderView('candidate/pdfPV.html.twig', array(
             'candidate_list_affecter' => $candidatListA,
-            'type_list' => $type
+            'type_list' => $type,
+            'Vide' => $vide
         ));
 
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html),
-            'PV.pdf'
+            'PV ' . date('Y_m_d') . '.pdf'
         );
     }
 
