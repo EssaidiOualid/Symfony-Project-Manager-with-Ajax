@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Attestation</title>
+		<meta charset="utf-8">
+
+   		<link rel="stylesheet" href="https://efmpt.uae.ac.ma/e-fmpt/public/uplaods/css/document.css">
+	</head>
+	<body>
+        <div class="label_fichier">
+			Tanger le, {{ "now"|date("d/m/Y") }}
+	    </div><br><br>
+	       <h1>ATTESTATION DE TRAVAIL</h1>
+        <div class="contenu_fichier"><br>
+			<p> Le Doyen de la Faculté de Médecine de Tanger Atteste que:</p>
+  
+  			<table>
+              <tr>
+              	<th>
+              		M.
+              	</th>
+              	<td style="text-transform:uppercase;">
+              		:  personnel.nom personnel.prenom
+              	</td>
+              </tr>
+	      			<tr>
+                <th>
+                  D.R.P.P 
+                </th>
+                <td>
+                  : personnel.numPPR
+                </td>
+              </tr>
+              <tr>
+              	<th>
+              		Grade
+              	</th>
+              	<td>
+              		: personnel.corpsId.designationFR
+              	</td>
+              </tr>
+           
+
+ 
+ 
+
+
+
+  			</table>
+			
+			
+			<p><strong>Recruté(e) dans </strong><br><br><br>
+        <span>L'Administration à compter du  personnel.dateRecrutement|date('Y-m-d')  </span><span style="float: right; padding-right: 80px;"></span>
+			 <br>
+       <span>Exerce à l'FMPT depuis le  personnel.dateAffectationENSAT|date('Y-m-d') </span><span style="float: right; padding-right: 80px;"></span>
+			 <br></p><br>
+
+			<p> La présente attestation est délivrée à la demande de l'interessé(e) pour servir et valoir ce que de droit.</p>
+		</div>
+	</body>
+</html>

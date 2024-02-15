@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+
+<h4 class="fw-bold py-3 mb-4">
+		<span class="text-muted fw-light">Attesstations </span></h4>
+         <form action="" id="recherche" class="mt-3">
+	<div class="row">
+		<div class="col-md-12">
+            <div  class="card mb-4">
+				<h5 class="card-header">Recherche Details</h5>
+				<!-- Account -->
+                <div class="card-body">
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label for="cin" class="form-label">CIN</label>
+							<input class="form-control" type="text" id="cin" name="cin" />
+						</div>
+                    </div>
+
+                    <div class="mt-2">
+						<button type="submit"  class="btn btn-primary me-2" >Recherche</button>
+					</div>
+                </div>
+            </div>  
+        </div>
+    </div>
+     </form>
+ 
+
+<div class="row" id="Details_candidate">
+		<div class="col-md-12">
+				<h5 class="card-header">Details</h5>
+				<!-- Account -->
+                <div class="card-body">
+					<div class="row">
+                    
+							<input class="form-control" disabled style="display: none" type="text" id="id" name="id" />
+						
+
+						<div class="mb-3 col-md-6">
+							<label for="cin1" class="form-label">CIN</label>
+							<input class="form-control" disabled type="text" id="cin1" name="cin1" />
+						</div>
+                        <div class="mb-3 col-md-6">
+							<label for="cne" class="form-label">CNE</label>
+							<input class="form-control"disabled type="text" id="cne" name="cne" />
+						</div>
+                        <div class="mb-3 col-md-6">
+							<label for="nom" class="form-label">Nom</label>
+							<input class="form-control" disabled type="text" id="nom" name="nom" />
+						</div>
+                        <div class="mb-3 col-md-6">
+							<label for="prenom" class="form-label">Prenom</label>
+							<input class="form-control"disabled type="text" id="prenom" name="prenom" />
+						</div>
+                        <div class="mb-3 col-md-6">
+							<label for="specialite" class="form-label">Specialite</label>
+							<input class="form-control"disabled type="text" id="specialite" name="specialite" />
+						</div>
+                        
+                    </div>
+                    
+
+                    <div class="mt-2" >
+						<a  id="btn_impremer"  class="btn btn-primary me-2 impremer" >Impremer</a>
+					</div>
+                </div>
+            
+        </div>
+    </div>
+
+	
+{% block javascript %}
+
+<script>
+
+$(document).ready(function(){
+        $("#Details_candidate")[0].style.display = 'none'
+        $('#recherche').submit(function(event){
+            event.preventDefault();
+
+            let isValid = true;
+            let fields = [
+                $("#cin"),
+                ];
+
+            fields.forEach(field => {
+                if (field.val() === "") {
+                    field.addClass("error");
+                    isValid = false;
+                } else {
+                     field.removeClass("error");
+                }
+            });
+
+            if(isValid){
+                let id = $("#cin").val();
+                let url = "{{ path('rcandidat') }}";
+                   // let u=url.replace('p_id', id);
+                 $.ajax({
+                    url: url,
+                    method: 'post',
+                    data: $(this).serialize()
+                }).then((response) => {
+                    $("#Details_candidate")[0].style.display = 'block'
+                          
+                    if(!$.isEmptyObject(response)){
+                            console.log(response);
+                        $('#cin1').val(response.cin);
+                        $('#id').val(response.id);
+                        $('#nom').val(response.nom);
+                        $('#prenom').val(response.prenom);
+                        $('#cne').val(response.cne);
+                        $('#specialite').val(response.specialite);
+                        
+                           $('#btn_impremer').attr("href","attestation_impr/"+response.id);
+                                 // $('#btn_impremer').append('<a    class="btn btn-primary me-2 impremer" href="attestation_impr/'+response.id+'">Impremer</a>') 
+                    }
+
+                })
+                        
+            }
+
+        })
+})
+
+
+</script>
+
+   <!--- <script>
+            $(document).ready(function(){
+                 debugger ;
+                $(document).on('click', '.impremer', function(){
+               let id = $("#id").val();
+                    let url = "{{ path('app_attestation_impr', {id: 'p_id'}) }}";
+                    $.ajax({
+                        url: url.replace('p_id', id),
+                        method: 'GET'
+                    }).then((response) => {
+                         debugger ;
+                         console.log(response);
+                        if(!$.isEmptyObject(response)){
+                            $("#e_id").val(response.id);
+                            $("#e_fisrtName").val(response.first_name);
+                            $("#e_lastName").val(response.last_name);
+                            $("#e_contactInfo").val(response.contact_info);
+                            $("#edit_client").modal('show');
+                        }
+                    })
+                })
+            })
+        </script>
+-->
+
+
+{% endblock %}
+
+ {% endblock %}
