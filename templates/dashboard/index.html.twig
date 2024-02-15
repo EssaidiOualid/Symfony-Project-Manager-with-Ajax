@@ -10,15 +10,21 @@
 					<div class="card-body">
 						{% if type.intitule == "MEDICALE" %}
 							<i class="bx bx-plus-medical text-primary mb-1 fs-2"></i>
+							<h3 class="card-title text-primary mb-2">{{type.intitule}}</h3>
+							<h4 class="fw-semibold d-block text-primary mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 						{% elseif type.intitule == "CHIRURGICALES" %}
-							<i class="bx bx-cut text-secondary mb-1 fs-2"></i>
+							<i class="bx bx-cut text-danger mb-1 fs-2"></i>
+							<h3 class="card-title text-danger mb-2">{{type.intitule}}</h3>
+							<h4 class="fw-semibold d-block text-danger mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 						{% elseif type.intitule == "BIOLOGIE" %}
-							<i class="bx bx-dna text-success mb-1 fs-2"></i>
+							<i class="bx bx-dna text-secondary mb-1 fs-2"></i>
+							<h3 class="card-title text-secondary mb-2">{{type.intitule}}</h3>
+							<h4 class="fw-semibold d-block text-secondary mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 						{% elseif type.intitule == "PHARMACIE" %}
 							<i class="bx bx-test-tube text-info mb-1 fs-2"></i>
+							<h3 class="card-title text-info mb-2">{{type.intitule}}</h3>
+							<h4 class="fw-semibold d-block text-info mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 						{% endif %}
-						<h3 class="card-title mb-2">{{type.intitule|upper}}</h3>
-						<h4 class="fw-semibold d-block mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 					</div>
 				</div>
 			</div>
