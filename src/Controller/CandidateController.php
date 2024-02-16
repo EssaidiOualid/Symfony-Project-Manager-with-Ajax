@@ -141,16 +141,43 @@ class CandidateController extends AbstractController
         return new JsonResponse($newArray);
     }
 
-    #[Route('/candidate/pdf/{vide}', name: 'candidate_PDf', methods: 'get')]
-    public function pdfAction(Pdf $knpSnappyPdf, $vide = 'NoN')
+    #[Route('/candidate/pdf', name: 'candidate_PDf', methods: 'get')]
+    public function pdfAction(Pdf $knpSnappyPdf)
     {
+        $totaltype = $this->PostRepository->findSommeByType();
         $type = $this->TypeRepository->findAll();
         $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
-
-        $html = $this->renderView('candidate/pdfPV.html.twig', array(
+        $post = $this->PostRepository->findAll();
+        $session = $this->sessionRepository->findOneBy([
+            'active' => 1
+        ]);
+        $html = $this->renderView('candidate/pdf.html.twig', array(
             'candidate_list_affecter' => $candidatListA,
             'type_list' => $type,
-            'Vide' => $vide
+            'post_list' => $post,
+            'total_type' => $totaltype,
+            'session' => $session
+        ));
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'PV ' . date('Y_m_d') . '.pdf'
+        );
+    }
+
+    #[Route('/candidate/pdf/vide', name: 'candidate_PDf_vide', methods: 'get')]
+    public function pdfActionVide(Pdf $knpSnappyPdf)
+    {
+        $type = $this->TypeRepository->findAll();
+
+        $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
+        $session = $this->sessionRepository->findOneBy([
+            'active' => 1
+        ]);
+        $html = $this->renderView('candidate/pdfVide.html.twig', array(
+            'candidate_list_affecter' => $candidatListA,
+            'session' => $session,
+            'type_list' => $type,
         ));
 
         return new PdfResponse(

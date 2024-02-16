@@ -1,70 +1,180 @@
-{% block content %}
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+	<head>
+		<title>PV</title>
+		<meta charset="utf-8">
+	</head>
+	<style>
+		body {
+			margin-left: 25px;
+			margin-right: 25px;
+		}
+		.label_date {
+			font-size: 22px;
+			font-weight: bold;
+			text-align: left;
+			padding-top: 20%;
+		}
+		.label_date1 {
+			font-size: 22px;
+			font-weight: bold;
+			text-align: center;
+			padding-top: 5%;
+		}
+		h1 {
+			font-size: 24px;
+			font-weight: bold;
+			text-align: center;
+			padding-top: 5%;
+			margin-bottom: 5%;
+		}
+		p {
+			text-align: justify;
+			font-size: 22px;
+		}
+		.right {
+
+			margin-right: 1em;
+		}
+		.center {
+			text-align: center;
+		}
+		.left {
+
+			margin-left: 1em;
+		}
+		table {
+
+			margin-right: 5%;
+			width: 90%;
+		}
+		table,
+		th,
+		td,
+		th {
+			font-size: 22px;
+			padding-right: 5px;
+			border: 1px solid;
+
+		}
+		table thead {
+			background-color: #00FFFF;
+
+		}
+	</style>
+	<body>
 
 
-	<h3 class="card-header" style="text-align:center">PV</h3>
+		<table>
 
-	{% for type in type_list %}
+			<tr>
 
-
-		<h3 style="text-align:center">{{type.intitule}}</h3>
-
-
-		<table class="table table-striped" id="client_table">
+				<td style="width: 20rem; text-align: center;">المملكة المغربية جامعة عبد المالك السعدي كلية الطب والصيدلة طنجة</td>
 
 
-			<thead>
-				<tr scope="row">
+				<td style="width: 20rem;"><img src="http://127.0.0.1:8000/assets/img/icons/logo/fmpt.png"/></td>
 
 
-					<th scope="col" style="width: 10rem;">CIN</th>
+<td style="width: 20rem; text-align: center;">Royaume du Maroc
+	<br>
+	Université Abdelmalek Essaidi
+	<br>
+	Faculté de Médecine et de pharmacie Tanger</td>
 
 
-					<th scope="col" style="width: 10rem;">Nom</th>
 
-
-					<th scope="col" style="width: 10rem;">Prenom</th>
-
-					<th scope="col" style="width: 10rem;">Nationalite</th>
-
-					<th scope="col" style="width: 10rem;">Specialite</th>
-
-
-					<th scope="col" style="width: 10rem;">categorie</th>
-
-				</tr>
-			</thead>
-			<tbody>
-				{% for Candidat in candidate_list_affecter %}
-
-
-					{% if (Candidat.type.intitule == type.intitule) %}
-
-
-						<tr scope="row">
-
-
-							<td style="text-align:center">{{ Candidat.cin }}</td>
-
-							<td style="text-align:center">{{ Candidat.nom }}</td>
-
-							<td style="text-align:center">{{ Candidat.prenom }}</td>
-
-							<td style="text-align:center">{{ Candidat.Nationnalite }}</td>
-
-
-							<td style="text-align:center">{{ Vide =='NoN' ?( Candidat.Specialite ? Candidat.Specialite.intitule : "NON affecter") : '..............'}}</td>
-
-
-							<td style="text-align:center">{{ Vide =='NoN' ?(Candidat.categorie ? Candidat.categorie.intitule : "NON affecter"):'...........' }}</td>
-
-
-						</tr>
-
-
-					{% endif %}
-
-				{% endfor %}
-			</tbody>
+			</tr>
 		</table>
-	{% endfor %}
-{% endblock %}
+		<h2 class="card-header" style="text-align:center">PV Répartition des Spécialités du concours de résidanat session du 15 Décembre 2021 (Vendredi 07 Janvier 2022 à 11h00 à la salle de conférence)
+
+		</h2>
+		<p>La faculté de Médecine et de Pharmacie de Tanger a procédé le Vendredi 07 Janvier 2022 à 11H00 à la salle de conférence, à l’opération des choix des spécialités par les médecins admis au concours de résidanat session 15 Décembre 2021.
+				Cette opération s’est faite par ordre de mérite, et ce, pour chacune des spécialités, médicale, chirurgicale et biologique. 
+				
+				Cette  réunion a été présidée par Pr. Mohamed AHALLAT Doyen de la Faculté de Médecine de Tanger, et ce en présence de :
+			<ul style="text-align: left;">
+
+				<li>
+					Mme Nadia ABDELADIM représente le Ministère de Santé
+				</li>
+
+				<li>
+					M. Adil CHARIA, représentant de la direction du CHU de Tanger ;</li>
+
+				<li>
+					Mr Abdallah OULMAATI, Vice-Doyen des Affaires Académiques FMPT ;</li>
+
+				<li>
+					Mme Hanane Hammich Secrétaire Générale de la FMPT</li>
+
+				<li>
+					Mr Mohamed Fekrouni, Responsable service Scolarité-Cours Examens</li>
+
+				<li>
+					Les Médecins résidants admis au concours de résidanat</li>
+
+			</ul>
+
+			La répartition définitive des résidants dans les spécialités médicales, chirurgicales et biologique est résumée dans le tableau ci-joint :
+
+		</p>
+
+
+		<h2>Répartition des Postes Du Concours de Résidanat Session 15 Décembre  2021 , Vendredi 07 Janvier 2022  à 11H00 à la Salle de conférence
+
+		</h2>
+
+		{% for type in type_list %}
+
+
+			<table class="table table-striped" id="client_table" style="border-collapse: collapse;">
+
+
+				<thead style="">
+					<tr scope="row" style="text-align:center">
+
+
+						Domaine:{{type.intitule}}
+
+					</tr>
+
+					<tr scope="row">
+
+
+						<th scope="col" style="width: 10rem;">Signature</th>
+
+
+						<th scope="col" style="width: 10rem;">Prenom</th>
+
+						<th scope="col" style="width: 10rem;">Nom</th>
+						<th scope="col" style="width: 10rem;">Type</th>
+
+						<th scope="col" style="width: 10rem;">Specialite</th>
+
+
+					</tr>
+				</thead>
+				<tbody>
+					{% for Candidat in candidate_list_affecter %}
+
+
+						{% if (Candidat.type.intitule == type.intitule) %}
+
+
+							<tr scope="row">
+
+								<td style="text-align:center">{{ Candidat.prenom }}</td>
+								<td style="text-align:center">{{ Candidat.nom }}</td>
+								<td style="text-align:center">{{ Vide =='NoN' ?( Candidat.Specialite ? Candidat.Specialite.intitule : "NON affecter") : ''}}</td>
+								<td style="text-align:center">{{ Vide =='NoN' ?(Candidat.categorie ? Candidat.categorie.intitule : "NON affecter"):'' }}</td>
+
+
+							</tr>
+
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endfor %}
+	</body>
+</html>

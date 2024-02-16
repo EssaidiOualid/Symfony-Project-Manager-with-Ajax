@@ -31,6 +31,9 @@ class Session
     #[ORM\OneToMany(mappedBy: 'Session', targetEntity: Candidate::class)]
     private Collection $candidates;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $JourConference = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -134,6 +137,18 @@ class Session
                 $candidate->setSession(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getJourConference(): ?string
+    {
+        return $this->JourConference;
+    }
+
+    public function setJourConference(?string $JourConference): static
+    {
+        $this->JourConference = $JourConference;
 
         return $this;
     }
