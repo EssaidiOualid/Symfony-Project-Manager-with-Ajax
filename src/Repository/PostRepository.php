@@ -21,37 +21,37 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-//    /**
-//     * @return Post[] Returns an array of Post objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Post[] Returns an array of Post objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Post
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Post
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 
     /**
      * @return Post[] Returns an array of Post objects
      */
     public function findBySession(): array
     {
-        $active='1';
+        $active = '1';
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
@@ -65,27 +65,45 @@ class PostRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findTotal() {
+    public function findTotal()
+    {
 
-        $query="SELECT SUM(nbr_reste) as total FROM `post`";
+        $query = "SELECT SUM(nbr_reste) as total FROM `post`";
         $statement = $this->getEntityManager()->getConnection()->prepare($query);
-        $result = $statement->executeQuery()->fetchAssociative();  
-        return  $result ;
-
+        $result = $statement->executeQuery()->fetchAssociative();
+        return  $result;
     }
-    public function findSommeBySpecialite() {
+    public function findSommeBySpecialite()
+    {
 
-        $query="SELECT `specialite_id`, SUM(nbr_reste) as somme FROM `post` GROUP BY `specialite_id`";
+        $query = "SELECT `specialite_id`, SUM(nbr_reste) as somme FROM `post` GROUP BY `specialite_id`";
         $statement = $this->getEntityManager()->getConnection()->prepare($query);
         $result = $statement->executeQuery()->fetchAllAssociative();
-        return  $result ;
-
+        return  $result;
     }
 
-    public function findSommeByType(){
-        $query="SELECT T.intitule, SUM(nbr_reste) as somme FROM post P INNER JOIN specialite S ON P.specialite_id = S.id INNER JOIN type T ON T.id = S.type_id GROUP BY `type_id`";
+    public function findSommeByType()
+    {
+        $query = "SELECT T.intitule, SUM(nbr_reste) as somme FROM post P INNER JOIN specialite S ON P.specialite_id = S.id INNER JOIN type T ON T.id = S.type_id GROUP BY `type_id`";
         $statement = $this->getEntityManager()->getConnection()->prepare($query);
         $result = $statement->executeQuery()->fetchAllAssociative();
-        return  $result ;
+        return  $result;
+    }
+
+    public function findSommeByTypeT()
+    {
+        $query = "SELECT  SUM(nbr_post) as somme FROM post P INNER JOIN specialite S ON P.specialite_id = S.id INNER JOIN type T ON T.id = S.type_id GROUP BY `type_id`";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAllAssociative();
+        return  $result;
+    }
+
+
+    public function findTotalByTypeT()
+    {
+        $query = "SELECT SUM(nbr_post) as total FROM `post`";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAssociative();
+        return  $result;
     }
 }

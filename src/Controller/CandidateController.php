@@ -144,10 +144,29 @@ class CandidateController extends AbstractController
     #[Route('/candidate/pdf', name: 'candidate_PDf', methods: 'get')]
     public function pdfAction(Pdf $knpSnappyPdf)
     {
-        $totaltype = $this->PostRepository->findSommeByType();
-        $type = $this->TypeRepository->findAll();
+          $type = $this->TypeRepository->findAll();
+         $posts = $this->PostRepository->findBySession();
+        $categories = $this->categorieRepository->findAll();
+        //$totaltype = $this->PostRepository->findSommeByTypeT();
+       // $total = $this->PostRepository->findTotalByTypeT();
+
+        $table = [];
+        foreach ($posts as $post) {
+            $table[$post->getSpecialite()->getId()][$post->getCategorie()->getId()] = $post->getNbrPost();
+        }
+
+        $table[0][0] = $this->PostRepository->findTotal()['total'];
+        $reception = $this->PostRepository->findSommeBySpecialite();
+
+        $totalBySpecialite = [];
+        $totalByType = $this->PostRepository->findSommeByType();
+
+        foreach ($reception as $tableSomme) {
+            $totalBySpecialite[$tableSomme["specialite_id"]] = $tableSomme["somme"];
+        }
+
         $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
-        $post = $this->PostRepository->findAll();
+  
         $session = $this->sessionRepository->findOneBy([
             'active' => 1
         ]);
@@ -155,7 +174,10 @@ class CandidateController extends AbstractController
             'candidate_list_affecter' => $candidatListA,
             'type_list' => $type,
             'post_list' => $post,
-            'total_type' => $totaltype,
+            //'total_type' => $totalByType,
+            'totalBySpecialite' => $totalBySpecialite,
+            'totalByType' => $totalByType,
+            'Categorie'=>$categories,
             'session' => $session
         ));
 
