@@ -1,62 +1,110 @@
-
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Attestation</title>
-		<meta charset="utf-8">
+<html >
+  <head>
+    <title>PV</title>
+    <meta charset="utf-8">
+  </head>
+  <style type="text/css">
+    body{
+      margin-left:25px;
+      margin-right:25px;
+    }
+    .label_date{
+      font-size: 22px;
+      font-weight: bold;
+      text-align: left;
+      padding-top: 20%;
+    }
+    .label_date1{
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      padding-top: 5%;
+    }
+    h1{
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      padding-top: 5%;
+      margin-bottom:5%;
+    }
+    p{
+      text-align: justify;
+      font-size:22px;
+    }
+    .right {
+      text-align: right;
+      margin-right: 1em;
+    }
+    .center {
+      text-align: center;
+    }
+    .left {
+      text-align: left;
+      margin-left: 1em;
+    }
+    table {
+      font-family : "Times New Roman", Arial, Verdana, Sans-serif;
+     
+      width:100%;
+    }
+    table, th, td,th {
+      font-size:22px;
+      padding-right: 4px;
+    }
+	td{
+		text-align: justify;
+	}
+	
+  </style>
 
-   		<link rel="stylesheet" href="https://efmpt.uae.ac.ma/e-fmpt/public/uplaods/css/document.css">
+   		
 	</head>
 	<body>
+
+	<table style=" text-align: center">
+		<tr>
+			<td style="width:40%;">
+              	<p style=" text-align: center">Royaume du Maroc <br>Université Abdelmalek Essaâdi <br>Faculte de Médecine et de Pharmacie <br>Tanger</p>
+    		</td>
+			<td style="width:30%;">
+              	<img  src="https://127.0.0.1:8000/assets/img/icons/logo/fmpt.png"></img>
+    		</td>
+			<td style="width:30%;"> 
+              	<p  style=" text-align: center;">المملكة المغربية<br>جامعة عبد المالك السعدي <br>كلية الطب و الصيدلة<br>طنجة</p>
+    		</td>
+		</tr>
+	</table>
+
+<div style="  display: flex;  justify-content: space-around;">
+</div>
         <div class="label_fichier">
-			Tanger le, {{ "now"|date("d/m/Y") }}
+
 	    </div><br><br>
-	       <h1>ATTESTATION DE TRAVAIL</h1>
-        <div class="contenu_fichier"><br>
-			<p> Le Doyen de la Faculté de Médecine de Tanger Atteste que:</p>
-  
-  			<table>
-              <tr>
-              	<th>
-              		M.
-              	</th>
-              	<td style="text-transform:uppercase;">
-              		:  personnel.nom personnel.prenom
-              	</td>
-              </tr>
-	      			<tr>
-                <th>
-                  D.R.P.P 
-                </th>
-                <td>
-                  : personnel.numPPR
-                </td>
-              </tr>
-              <tr>
-              	<th>
-              		Grade
-              	</th>
-              	<td>
-              		: personnel.corpsId.designationFR
-              	</td>
-              </tr>
-           
-
- 
- 
-
-
-
-  			</table>
-			
-			
-			<p><strong>Recruté(e) dans </strong><br><br><br>
-        <span>L'Administration à compter du  personnel.dateRecrutement|date('Y-m-d')  </span><span style="float: right; padding-right: 80px;"></span>
-			 <br>
-       <span>Exerce à l'FMPT depuis le  personnel.dateAffectationENSAT|date('Y-m-d') </span><span style="float: right; padding-right: 80px;"></span>
-			 <br></p><br>
-
-			<p> La présente attestation est délivrée à la demande de l'interessé(e) pour servir et valoir ce que de droit.</p>
+	       <h1>ATTESTATION DE SCOLARITE</h1>
+        <div ><br>
+			<p> Le Doyen de la Faculté de Médecine de Tanger Atteste que L'etudiant(e)</p>
+			<p> <b>Nom et Prénom </b> : {{candidate.nom}}  {{candidate.prenom}}</p>
+			<p> <b>Code National de L'Etudiant </b> : {{candidate.cne}}</p>
+			<p> <b>Date de Naissance </b> : </p>
+			<p> Est régulièrement inscrit(e) à la Faculté de Médecine et de Pharmacie de tanger pour L'année Université : <b>2023/2024</b>  </p>
+			<p> <b>Filiére </b> : {{candidate.specialite}}</p>
+  			<br><br><br>
+			<div style=" text-align: center;">
+			Tanger le, {{ "now"|date("d/m/Y") }}
+			<div>
+			<br><br><br>
+			<br><br><br>
+			<br><br><br>
+    		<br><br><br>
+			<br><br><br>
+			<br><br><br>
+		
+			<p> <b>N.B : </b>La présente Document n'est délivrée qu'en un seul exemplaire il  appartient à l'etudiant d'en faire des photocopies certifiées conformes.</p>
+		<div style="border-bottom: 1px solid; margin-bottom: 4px;">	</div>
+			<span style="font-size:18px; text-align: center; ">
+			Faculté de Médecine et de Pharmacie de Tanger B.P 365 .KM 15 Route de Rabat GEZNAYA, Tanger
+			</span>
 		</div>
 	</body>
 </html>

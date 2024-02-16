@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\CandidateRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,11 +33,19 @@ class AttestationController extends AbstractController
     }
 
     #[Route('/attestation_impr/{id}', name: 'app_attestation_impr')]
-    public function recherch($id): Response
+    public function recherch($id,Pdf $knpSnappyPdf): Response
     {
-        return $this->render('attestation/attestation.html.twig', [
-            'controller_name' => 'AttestationController',
-        ]);
+
+        $candidate = $this->candidateRepository->find($id);
+            $html= $this->renderView('attestation/attestation.html.twig', [ 'candidate'=> $candidate]);
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html,array('orientation' => 'Portrait')),
+            'personnel-data.pdf' ,
+            
+        );
+
+       // return $this->render('attestation/attestation.html.twig', [ ]);
     }
 
 
@@ -57,19 +67,6 @@ class AttestationController extends AbstractController
         return new JsonResponse($candidate_data);
     }
 
-    #[Route('/attestation/get/{cin}', name: 'get_attestation', methods: 'get')]
-    public function getattestation($cin) : JsonResponse{
-        $candidate = $this->candidateRepository->findBy(['CIN'=>$cin])[0]; 
-       // dd($candidate);
-       $candidate_data = [
-        'id' => $candidate->getId(),
-        'nom' => $candidate->getNom(),
-        'prenom' => $candidate->getPrenom(),
-        'cin' => $candidate->getCIN(),
-        'cne' => $candidate->getCNE(),
-        'specialite'=>$candidate->getSpecialite()?->getIntitule(),
-    ];
-    return new JsonResponse($candidate_data);
-    }
+ 
 
 }
