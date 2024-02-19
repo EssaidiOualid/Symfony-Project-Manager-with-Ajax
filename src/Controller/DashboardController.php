@@ -43,7 +43,33 @@ class DashboardController extends AbstractController
         $types =$this->typeRepository->findAll();
         $posts =$this->postRepository->findBySession();
         $categories =$this->categorieRepository->findAll();
-
+        $style = 
+        [
+            [
+                'icon' => "bx-plus-medical",
+                'color' => "text-primary"
+            ],
+            [
+                'icon' => "bx-cut",
+                'color' => "text-danger"
+            ],
+            [
+                'icon' => "bx-dna",
+                'color' => "text-secondary"
+            ],
+            [
+                'icon' => "bx-test-tube",
+                'color' => "text-info"
+            ]
+        ];
+        /*$typeTable = [];
+        for($i = 0 ; $i < count($types) ; $i++){
+            array_push($typeTable, [
+                'id' => $types['id'],
+                'intitule' => $types['intitule'],
+                'specialites' => $types['specialites']
+            ]);
+        }*/
 
 
        //dd($posts);
@@ -58,13 +84,21 @@ class DashboardController extends AbstractController
         $reception = $this->postRepository->findSommeBySpecialite();
 
         $totalBySpecialite = [];
-        $totalByType = $this->postRepository->findSommeByType();
+        $totalByType_temp = $this->postRepository->findSommeByType();
 
         foreach($reception as $tableSomme){
             $totalBySpecialite[$tableSomme["specialite_id"]] = $tableSomme["somme"];
         }
 
-        //dd($type.specialites);
+        $totalByType = [];
+
+        $i = 0;
+        foreach($totalByType_temp as $type){
+            array_push($totalByType, ['intitule' => $type['intitule'], 'somme' => $type['somme'], 'codeIcon' => $style[$i]['icon'], 'codeColor' => $style[$i]['color']]);
+            $i++;
+        }
+
+        //dd($totalByType);
       
 
         return $this->render('dashboard/index.html.twig', [

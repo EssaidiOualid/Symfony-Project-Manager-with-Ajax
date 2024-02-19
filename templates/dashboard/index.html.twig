@@ -8,67 +8,49 @@
 			<div onclick="showTable('{{ type.intitule|lower }}')" class="col-lg-3 text-center  col-md-4 col-6 mini-card" style="cursor: pointer;">
 				<div class="card h-100">
 					<div class="card-body">
-						{% if type.intitule == "MEDICALE" %}
-							<i class="bx bx-plus-medical text-primary mb-1 fs-2"></i>
-							<h3 class="card-title text-primary mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-primary mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% elseif type.intitule == "CHIRURGICALES" %}
-							<i class="bx bx-cut text-danger mb-1 fs-2"></i>
-							<h3 class="card-title text-danger mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-danger mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% elseif type.intitule == "BIOLOGIE" %}
-							<i class="bx bx-dna text-secondary mb-1 fs-2"></i>
-							<h3 class="card-title text-secondary mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-secondary mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% elseif type.intitule == "PHARMACIE" %}
-							<i class="bx bx-test-tube text-info mb-1 fs-2"></i>
-							<h3 class="card-title text-info mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-info mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% endif %}
+						<i class="bx {{ type.codeIcon }} {{ type.codeColor }} mb-1 fs-2"></i>
+						<h3 class="card-title {{ type.codeColor }} mb-2">{{type.intitule}}</h3>
+						<h4 class="fw-semibold d-block {{ type.codeColor }} mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 					</div>
 				</div>
 			</div>
 		{% endfor %}
 		{% for type in types %}
-			<div id="{{ type.intitule|lower }}" class="tables">
-				<h2 class="typeTitle">{{ type.intitule }}</h2>
-				<table id="{{ type.intitule|upper }}" class="table">
-					<thead>
+		<div id="{{ type.intitule|lower }}" class="tables" style="display: none;">
+			<h2 class="typeTitle">{{ type.intitule }}</h2>
+			<table id="{{ type.intitule|upper }}" class="table">
+				<thead>
+					<tr>
+						<th scope="col">Spécialité</th>
+						{% for categorie in categories %}
+							<th scope="col">{{categorie.intitule}}</th>
+						{% endfor %}
+						<th scope="col">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for specialite in type.specialites %}
 						<tr>
-							<th scope="col">Spécialité</th>
+							<td>{{specialite.intitule}}</td>
 							{% for categorie in categories %}
-								<th scope="col">{{categorie.intitule}}</th>
-							{% endfor %}
-							<th scope="col">Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for specialite in type.specialites %}
-							<tr>
-								<td>{{specialite.intitule}}</td>
-								{% for categorie in categories %}
-									{% if posts[specialite.id][categorie.id] is defined %}
-										<td>{{posts[specialite.id][categorie.id]}}</td>
-									{% endif %}
-									{% if posts[specialite.id][categorie.id] is not defined %}
-										<td>0</td>
-									{% endif %}
-								{% endfor %}
-								{% if totalBySpecialite[specialite.id] is defined %}
-									<td>{{totalBySpecialite[specialite.id]}}</td>
+								{% if posts[specialite.id][categorie.id] is defined %}
+									<td>{{posts[specialite.id][categorie.id]}}</td>
 								{% endif %}
-								{% if totalBySpecialite[specialite.id] is not defined %}
+								{% if posts[specialite.id][categorie.id] is not defined %}
 									<td>0</td>
 								{% endif %}
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-				<!--<nav aria-label="..." id="pagination">
-									<ul class="pagination">
-									</ul>
-								</nav>-->
-			</div>
+							{% endfor %}
+							{% if totalBySpecialite[specialite.id] is defined %}
+								<td>{{totalBySpecialite[specialite.id]}}</td>
+							{% endif %}
+							{% if totalBySpecialite[specialite.id] is not defined %}
+								<td>0</td>
+							{% endif %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		{% endfor %}
 		<script src="{{ asset('assets/js/chart.js') }}"></script>
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -131,12 +113,12 @@ for (var i = 0; i < tables.length; i++) {
 tables[i].style.display = 'none';
 }
 
-// Afficher le tableau correspondant à l'ID passé en paramètre
-var tableau = document.getElementById(idTableau);
-if (tableau) {
-tableau.style.display = 'table';
-}
-}
+				// Afficher le tableau correspondant à l'ID passé en paramètre
+				var tableau = document.getElementById(idTableau);
+				if (tableau) {
+					tableau.style.display = 'block';
+				}
+			}
 
 // fonction de mise a jour automatique avec la base de donées
 
