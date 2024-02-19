@@ -8,29 +8,15 @@
 			<div onclick="showTable('{{ type.intitule|lower }}')" class="col-lg-3 text-center  col-md-4 col-6 mini-card" style="cursor: pointer;">
 				<div class="card h-100">
 					<div class="card-body">
-						{% if type.intitule == "MEDICALE" %}
-							<i class="bx bx-plus-medical text-primary mb-1 fs-2"></i>
-							<h3 class="card-title text-primary mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-primary mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% elseif type.intitule == "CHIRURGICALES" %}
-							<i class="bx bx-cut text-danger mb-1 fs-2"></i>
-							<h3 class="card-title text-danger mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-danger mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% elseif type.intitule == "BIOLOGIE" %}
-							<i class="bx bx-dna text-secondary mb-1 fs-2"></i>
-							<h3 class="card-title text-secondary mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-secondary mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% elseif type.intitule == "PHARMACIE" %}
-							<i class="bx bx-test-tube text-info mb-1 fs-2"></i>
-							<h3 class="card-title text-info mb-2">{{type.intitule}}</h3>
-							<h4 class="fw-semibold d-block text-info mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
-						{% endif %}
+						<i class="bx {{ type.codeIcon }} {{ type.codeColor }} mb-1 fs-2"></i>
+						<h3 class="card-title {{ type.codeColor }} mb-2">{{type.intitule}}</h3>
+						<h4 class="fw-semibold d-block {{ type.codeColor }} mb-1" style="padding-top: 10px;">{{type.somme}}</h4>
 					</div>
 				</div>
 			</div>
 		{% endfor %}
 		{% for type in types %}
-		<div id="{{ type.intitule|lower }}" class="tables">
+		<div id="{{ type.intitule|lower }}" class="tables" style="display: none;">
 			<h2 class="typeTitle">{{ type.intitule }}</h2>
 			<table id="{{ type.intitule|upper }}" class="table">
 				<thead>
@@ -64,10 +50,6 @@
 					{% endfor %}
 				</tbody>
 			</table>
-			<!--<nav aria-label="..." id="pagination">
-					<ul class="pagination">
-					</ul>
-				</nav>-->
 		</div>
 		{% endfor %}
 		<script src="{{ asset('assets/js/chart.js') }}"></script>
@@ -136,7 +118,7 @@
 				// Afficher le tableau correspondant à l'ID passé en paramètre
 				var tableau = document.getElementById(idTableau);
 				if (tableau) {
-					tableau.style.display = 'table';
+					tableau.style.display = 'block';
 				}
 			}
 
