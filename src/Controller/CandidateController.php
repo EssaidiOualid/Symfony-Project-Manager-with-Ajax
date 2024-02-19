@@ -144,11 +144,11 @@ class CandidateController extends AbstractController
     #[Route('/candidate/pdf', name: 'candidate_PDf', methods: 'get')]
     public function pdfAction(Pdf $knpSnappyPdf)
     {
-          $type = $this->TypeRepository->findAll();
-         $posts = $this->PostRepository->findBySession();
+        $type = $this->TypeRepository->findAll();
+        $posts = $this->PostRepository->findBySession();
         $categories = $this->categorieRepository->findAll();
         //$totaltype = $this->PostRepository->findSommeByTypeT();
-       // $total = $this->PostRepository->findTotalByTypeT();
+        // $total = $this->PostRepository->findTotalByTypeT();
 
         $table = [];
         foreach ($posts as $post) {
@@ -157,27 +157,38 @@ class CandidateController extends AbstractController
 
         $table[0][0] = $this->PostRepository->findTotal()['total'];
         $reception = $this->PostRepository->findSommeBySpecialite();
-
+        $total = $this->PostRepository->findTotalT();
         $totalBySpecialite = [];
-        $totalByType = $this->PostRepository->findSommeByType();
+        $totalByType = $this->PostRepository->findSommeByTypeT();
 
         foreach ($reception as $tableSomme) {
             $totalBySpecialite[$tableSomme["specialite_id"]] = $tableSomme["somme"];
         }
 
+        //  dd($posts[1]->getCategorie()->getCandidates());
         $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
-  
+        // dd($candidatListA);
+        $condid = [];
+        $i = 0;
+        foreach ($candidatListA as $cand) {
+            $condid[$cand->getCategorie()->getId()][$cand->getSpecialite()->getId()] = $cand;
+            $i++;
+        }
+        // dd($condid);
         $session = $this->sessionRepository->findOneBy([
             'active' => 1
         ]);
+        $knpSnappyPdf->setOption('footer-right', '[page]');
+
         $html = $this->renderView('candidate/pdf.html.twig', array(
-            'candidate_list_affecter' => $candidatListA,
+            'candidate_list_affecter' => $condid,
             'type_list' => $type,
-            'post_list' => $post,
+            'post_list' => $posts,
             //'total_type' => $totalByType,
             'totalBySpecialite' => $totalBySpecialite,
             'totalByType' => $totalByType,
-            'Categorie'=>$categories,
+            'Total' => $total,
+            'Categorie' => $categories,
             'session' => $session
         ));
 

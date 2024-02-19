@@ -45,9 +45,9 @@ class CandidateRepository extends ServiceEntityRepository
 
 
         return $this->createQueryBuilder('C')
-            ->andWhere('C.Rang IS not  null')
-            ->andWhere('C.Specialite IS  null')
-            ->andWhere('C.Categorie IS  null')
+            ->andWhere('C.Rang IS not null')
+            ->andWhere('C.Specialite IS not null')
+            ->andWhere('C.Categorie IS  not null')
             ->addOrderBy('C.Rang', 'ASC')
             ->getQuery()
             ->execute();
