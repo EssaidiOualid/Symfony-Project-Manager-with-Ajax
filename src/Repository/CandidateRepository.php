@@ -64,9 +64,7 @@ class CandidateRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    /**
-     * @return Candidate[]
-     */
+
     public function findAllCandidate(): array
     {
 
@@ -78,6 +76,34 @@ class CandidateRepository extends ServiceEntityRepository
             ->addOrderBy('C.Rang', 'ASC')
             ->getQuery()
             ->execute();
+    }
+    /**
+     * @return Candidate[]
+     */
+    public function findTotalT()
+    {
+    }
+
+
+    public function findAllABS()
+    {
+
+
+        $query = "SELECT  c.* FROM `candidate` c ,specialite S  WHERE S.id=c.specialite_id and S.intitule ='Sans choix' order by c.specialite_id, rang ASC ;";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAllAssociative();
+        return  $result;
+    }
+
+
+    public function findAllABSTotal()
+    {
+
+
+        $query = "SELECT  COUNT(1)  total ,c.type_id FROM `candidate` c ,specialite S  WHERE S.id=c.specialite_id and S.intitule ='Sans choix' GROUP by c.type_id order by c.specialite_id, rang ASC ;";
+        $statement = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $statement->executeQuery()->fetchAllAssociative();
+        return  $result;
     }
 
     //    /**

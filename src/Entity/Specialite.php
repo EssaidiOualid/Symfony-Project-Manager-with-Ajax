@@ -24,13 +24,16 @@ class Specialite
     #[ORM\ManyToOne(inversedBy: 'specialites')]
     private ?Type $Type = null;
 
-    #[ORM\OneToMany(mappedBy: 'Specialite', targetEntity: Post::class, orphanRemoval: true, cascade:["persist","remove"])]
+    #[ORM\OneToMany(mappedBy: 'Specialite', targetEntity: Post::class, orphanRemoval: true, cascade: ["persist", "remove"])]
     private Collection $posts;
 
     #[ORM\OneToMany(mappedBy: 'Specialite', targetEntity: Candidate::class)]
     private Collection $candidates;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(
+        length: 255,
+        nullable: true
+    )]
     private ?string $intituleHtml = null;
 
     public function __construct()

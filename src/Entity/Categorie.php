@@ -24,6 +24,9 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Candidate::class)]
     private Collection $candidates;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $intituleHtml = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -103,6 +106,18 @@ class Categorie
                 $candidate->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIntituleHtml(): ?string
+    {
+        return $this->intituleHtml;
+    }
+
+    public function setIntituleHtml(?string $intituleHtml): static
+    {
+        $this->intituleHtml = $intituleHtml;
 
         return $this;
     }
