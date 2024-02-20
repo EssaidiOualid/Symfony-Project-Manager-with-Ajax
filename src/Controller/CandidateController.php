@@ -185,8 +185,8 @@ class CandidateController extends AbstractController
         $session = $this->sessionRepository->findOneBy([
             'active' => 1
         ]);
-        if($id== -1)
-        $knpSnappyPdf->setOption('footer-center', '[page]');
+        if ($id == -1)
+            $knpSnappyPdf->setOption('footer-center', '[page]');
 
         $html = $this->renderView('candidate/pdf.html.twig', array(
             'candidate_list_affecter' => $condid,
