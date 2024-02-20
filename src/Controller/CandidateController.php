@@ -50,7 +50,7 @@ class CandidateController extends AbstractController
 
     #[Route('/candidate', name: 'app_candidate')]
     public function index(): Response
-    {
+    {  
         $type = $this->TypeRepository->findAll();
         $candidatList2 = $this->PostRepository->findAll();
         $categorie = $this->categorieRepository->findAll();

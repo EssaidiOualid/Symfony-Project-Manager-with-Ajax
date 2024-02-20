@@ -84,7 +84,7 @@ class PostRepository extends ServiceEntityRepository
 
     public function findSommeByType()
     {
-        $query = "SELECT T.intitule, SUM(nbr_reste) as somme FROM post P INNER JOIN specialite S ON P.specialite_id = S.id INNER JOIN type T ON T.id = S.type_id GROUP BY `type_id`";
+        $query = "SELECT T.intitule, SUM(nbr_reste) as somme FROM post P INNER JOIN specialite S ON P.specialite_id = S.id INNER JOIN type T ON T.id = S.type_id where s.intitule <> 'Sans choix'  GROUP BY `type_id`";
         $statement = $this->getEntityManager()->getConnection()->prepare($query);
         $result = $statement->executeQuery()->fetchAllAssociative();
         return  $result;
