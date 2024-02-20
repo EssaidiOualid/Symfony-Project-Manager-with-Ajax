@@ -63,7 +63,7 @@ class CandidateController extends AbstractController
             }
 
         $candidatList = $this->candidateRepository->findAllCandidateR();
-
+        //dd($type);
         return $this->render('candidate/index.html.twig', [
             'candidat_list' => $candidatList,
             'Specialite_list' => $candidatList1,
