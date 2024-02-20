@@ -36,6 +36,33 @@ class CandidateRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+     /**
+     * @return Candidate[]
+     */
+    public function findAllCandidateValide(): array
+    {
+
+
+        return $this->createQueryBuilder('C')
+            ->andWhere('C.Rang IS not null')
+            ->addOrderBy('C.Rang', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return Candidate[]
+     */
+    public function findAllCandidateRo($str): array
+    {
+
+
+        return $this->createQueryBuilder('C')
+            ->andWhere('C.CIN like :str')
+            ->setParameter('str', $str)
+            ->getQuery()
+            ->execute();
+    }
 
     /**
      * @return Candidate[]
