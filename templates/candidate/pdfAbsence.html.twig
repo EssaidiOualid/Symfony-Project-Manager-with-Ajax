@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	</head>
+
+	<table>
+
+		<tr>
+
+			<td style="width: 20rem; text-align: center;">Royaume du Maroc
+				<br>
+				Université Abdelmalek Essaidi
+				<br>
+				Faculté de Médecine et de pharmacie
+				<br/>Tanger</td>
+
+
+			<td style="width: 20rem;"><img src="http://127.0.0.1:8000/assets/img/icons/logo/fmpt.png"/></td>
+
+
+			<td style="width: 20rem; text-align: center;">المملكة المغربية
+				<br/>جامعة عبد المالك السعدي<br/>
+				كلية الطب والصيدلة<br/>
+				طنجة</td>
+
+
+		</tr>
+	</table>
+	<br><br><br>
+
+	<h2 style="font-family:Tahoma; font-weight:normal; text-align: center;">Liste des Absences pour  R&eacute;partition des Sp&eacute;cialit&eacute;s du concours de r&eacute;sidanat session du
+
+		{{session.session}}
+		{% autoescape false %}
+
+			{{session.JourConference|striptags}}
+		{% endautoescape %}&nbsp;</h2>
+
+
+	{% for type in type_list %}
+		{% set var = true
+ %}
+
+		<br><br>
+		<table cellspacing="0" cellpadding="0" style="width:100%; border-collapse:collapse;border-style:solid; border-width:1pt; ">
+
+			<thead>
+
+				<tr style="height:19.5pt;">
+					<td colspan="4" style="width:475.45pt; border-style:solid; border-width:1pt; padding-right:3pt; padding-left:3pt; vertical-align:top; background-color:#8adaf0;">
+						<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+							<strong>
+								<span style="font-family:'Century Gothic';">Domaine</span>
+							</strong>
+							<strong>
+								<span style="font-family:'Century Gothic';">&nbsp;</span>
+							</strong>
+							<strong>
+								<span style="font-family:'Century Gothic';">:
+									{{type.intitule}}</span>
+
+							</strong>
+						</p>
+					</td>
+				</tr>
+
+
+				<tr style="height:36.75pt;">
+					<td style="width:111.4pt; border-right-style:solid; border-right-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3.5pt; vertical-align:top; background-color:#8adaf0;">
+						<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+							<span style="font-family:'Century Gothic';">CIN</span>
+						</p>
+					</td>
+
+					<td style="width:111.4pt; border-right-style:solid; border-right-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3.5pt; vertical-align:top; background-color:#8adaf0;">
+						<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+							<span style="font-family:'Century Gothic';">Nom et Pr&eacute;nom&nbsp;</span>
+						</p>
+					</td>
+
+				</tr>
+			</thead>
+			{% for candidate in candidate_list_absence %}
+				{% if candidate['type_id'] == type.id %}
+
+					<tbody>
+
+
+						<tr style="height:19.5pt;">
+							<td style="width:190.75pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3pt; vertical-align:top;">
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:14pt;">
+									<span style="font-family:'Century Gothic';">
+
+										{{candidate['cin']}}</p>
+
+								</p>
+							</td>
+
+
+							<td style="width:72.35pt; border-right-style:solid; border-right-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3.5pt; vertical-align:top;">
+								<p style="margin-top:0pt; margin-bottom:0pt; font-size:14pt;">
+									<span style="font-family:'Century Gothic';">{{candidate['nom']}}
+
+										{{candidate['prenom']}}</span>
+
+
+								</p>
+							</td>
+						</tr>
+
+					</tbody>
+				{% endif %}
+
+			{% endfor %}
+
+			{% for typeT in total_absence %}
+
+				{% if typeT["type_id"] == type.id %}
+					{% set var = false
+ %}
+
+					<tr style="height:28.7pt;">
+						<td style="width:173.5pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#8adaf0;">
+							<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+								<span style="font-family:'Century Gothic';">Sous Total</span>
+							</p>
+						</td>
+
+						<td style="width:145.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#8adaf0;">
+							<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+								<span style="font-family:'Century Gothic';">{{typeT["total"]}}</span>
+
+
+							</p>
+						</td>
+					</tr>
+
+				{% endif %}
+
+			{% endfor %}
+			{% if var  %}
+
+				<tr style="height:28.7pt;">
+
+
+					<td colspan="2" style="width:145.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; ">
+						<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+							<span style="font-family:'Century Gothic';">Aucun Absence</span>
+
+
+						</p>
+					</td>
+				</tr>
+
+			{% endif %}
+
+
+		</table>
+	{% endfor %}
+	<br><br>
+	{% set total = 0 %}
+
+	{% for totalABS in total_absence %}
+
+		{% set total = total + totalABS['total'] %}
+	{% endfor %}
+	<h3>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total des Absences :
+
+
+		{{total}}</h3>
+
+
+</html>

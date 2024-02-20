@@ -141,10 +141,17 @@ class CandidateController extends AbstractController
         return new JsonResponse($newArray);
     }
 
-    #[Route('/candidate/pdf', name: 'candidate_PDf', methods: 'get')]
-    public function pdfAction(Pdf $knpSnappyPdf)
+    #[Route('/candidate/pdf_{id}', name: 'candidate_PDf', methods: 'get')]
+    public function pdfAction(Pdf $knpSnappyPdf, $id = -1)
     {
-        $type = $this->TypeRepository->findAll();
+        $type = [];
+        if ($id == -1) {
+            $type = $this->TypeRepository->findAll();
+        } else {
+
+            $type[] = $this->TypeRepository->find($id);
+        }
+
         $posts = $this->PostRepository->findBySession();
         $categories = $this->categorieRepository->findAll();
         //$totaltype = $this->PostRepository->findSommeByTypeT();
@@ -178,7 +185,8 @@ class CandidateController extends AbstractController
         $session = $this->sessionRepository->findOneBy([
             'active' => 1
         ]);
-        $knpSnappyPdf->setOption('footer-right', '[page]');
+        if($id== -1)
+        $knpSnappyPdf->setOption('footer-center', '[page]');
 
         $html = $this->renderView('candidate/pdf.html.twig', array(
             'candidate_list_affecter' => $condid,
@@ -202,14 +210,33 @@ class CandidateController extends AbstractController
     public function pdfActionVide(Pdf $knpSnappyPdf)
     {
         $type = $this->TypeRepository->findAll();
-
+        $posts = $this->PostRepository->findBySession();
         $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
+        $table = [];
+        foreach ($posts as $post) {
+            $table[$post->getSpecialite()->getId()][$post->getCategorie()->getId()] = $post->getNbrPost();
+        }
+
+        $table[0][0] = $this->PostRepository->findTotal()['total'];
+        $reception = $this->PostRepository->findSommeBySpecialite();
+        $total = $this->PostRepository->findTotalT();
+        $totalBySpecialite = [];
+        $totalByType = $this->PostRepository->findSommeByTypeT();
+
+        foreach ($reception as $tableSomme) {
+            $totalBySpecialite[$tableSomme["specialite_id"]] = $tableSomme["somme"];
+        }
+
         $session = $this->sessionRepository->findOneBy([
             'active' => 1
         ]);
+        $knpSnappyPdf->setOption('footer-center', '[page]');
+
         $html = $this->renderView('candidate/pdfVide.html.twig', array(
             'candidate_list_affecter' => $candidatListA,
+            'totalByType' => $totalByType,
             'session' => $session,
+            'Total' => $total,
             'type_list' => $type,
         ));
 
@@ -219,7 +246,32 @@ class CandidateController extends AbstractController
         );
     }
 
+    #[Route('/candidate/pdf/Absence', name: 'candidate_PDf_Absence', methods: 'get')]
+    public function pdfActionAbse(Pdf $knpSnappyPdf)
+    {
+        $type = $this->TypeRepository->findAll();
 
+        $candidatListA = $this->candidateRepository->findAllABS(); //liste des candidate absence
+
+        $ABS_total = $this->candidateRepository->findAllABSTotal();
+        $session = $this->sessionRepository->findOneBy([
+            'active' => 1
+        ]);
+
+        $knpSnappyPdf->setOption('footer-center', '[page]');
+
+        $html = $this->renderView('candidate/pdfAbsence.html.twig', array(
+            'candidate_list_absence' => $candidatListA,
+            'type_list' => $type,
+            'session' => $session,
+            'total_absence' => $ABS_total
+        ));
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'PV ' . date('Y_m_d') . '.pdf'
+        );
+    }
     #[Route('/candidate/Attestation/{id}', name: 'candidate_PDf_attestation', methods: 'get')]
     public function pdfActionAttestation(Pdf $knpSnappyPdf, $id)
     {

@@ -16,16 +16,23 @@
 		<h6 style="text-align:center;">Télécharger Pv
 
 		</h6>
-		<a href="{{path('candidate_PDf')}}" class="btn btn-success">Telecharger PV
+		<a href="{{path('candidate_PDf')}}" class="btn btn-success">Télécharger PV
 
 
 		</a>
-		{% set T = 0 %}
-
-		{% set K =1 %}
-
-		{% set K = T + K %}
-		{{ K}}
 
 	</div>
+	<div class="d-grid gap-2 col-6 mx-auto mt-4">
+
+
+		<h6 style="text-align:center;">Télécharger Liste des Absences
+
+		</h6>
+		<a href="{{path('candidate_PDf_Absence')}}" class="btn btn-success">Télécharger la liste
+
+
+		</a>
+
+	</div>
+
 {% endblock %}
