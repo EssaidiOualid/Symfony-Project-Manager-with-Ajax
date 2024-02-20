@@ -32,8 +32,9 @@ class AttestationController extends AbstractController
         ]);
     }
 
+    //Imprimer candidate
     #[Route('/attestation_impr/{id}', name: 'app_attestation_impr')]
-    public function recherch($id,Pdf $knpSnappyPdf): Response
+    public function imprimer($id,Pdf $knpSnappyPdf): Response
     {
 
         $candidate = $this->candidateRepository->find($id);
@@ -45,25 +46,43 @@ class AttestationController extends AbstractController
             
         );
 
-       // return $this->render('attestation/attestation.html.twig', [ ]);
+    }
+
+    //Imprimer candidate
+    #[Route('/attestation_Reussite', name: 'app_attestation_Reussite')]
+    public function attestationReussite(Pdf $knpSnappyPdf): Response
+    {
+
+        $candidates = $this->candidateRepository->findAllCandidateValide();
+            $html= $this->renderView('attestation/attestation_Reussite.html.twig', [ 'candidates'=> $candidates]);
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html,array('orientation' => 'Portrait')),
+            'Attestation_Reussites.pdf' ,
+            
+        );
+
     }
 
 
-
+    // Recherche à candidate
     #[Route('/attestation/rcandidat', name: 'rcandidat', methods: 'Post')]
-    public function getClient(Request $request) //: JsonResponse
+    public function rcandidat(Request $request) : JsonResponse
     {
 
-        $candidate = $this->candidateRepository->findBy(['CIN'=>$request->get('cin')])[0]; 
-       // $candidate=count($candidates)>=1??$candidates[0]; 
-        $candidate_data = [
-            'id' => $candidate->getId(),
-            'nom' => $candidate->getNom(),
-            'prenom' => $candidate->getPrenom(),
-            'cin' => $candidate->getCIN(),
-            'cne' => $candidate->getCNE(),
-            'specialite'=>$candidate->getSpecialite()?->getIntitule(),
-        ];
+        $candidate = $this->candidateRepository->findAllCandidateRo("%".$request->get('cin')."%"); 
+        $candidate_data=[];
+foreach($candidate as $cand){
+    $candidate_data[]=[
+        'id' => $cand->getId(),
+        'nom' => $cand->getNom(),
+        'prenom' => $cand->getPrenom(),
+        'cin' => $cand->getCIN(),
+        'cne' => $cand->getCNE(),
+        'specialite'=>$cand->getSpecialite()?->getIntitule(),
+    ];
+}
+       
         return new JsonResponse($candidate_data);
     }
 
