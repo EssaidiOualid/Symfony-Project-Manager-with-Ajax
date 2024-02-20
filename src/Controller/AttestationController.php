@@ -42,7 +42,7 @@ class AttestationController extends AbstractController
 
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html,array('orientation' => 'Portrait')),
-            'personnel-data.pdf' ,
+            $candidate->getNom().'_'.$candidate->getPrenom().'.pdf' ,
             
         );
 
@@ -80,6 +80,8 @@ foreach($candidate as $cand){
         'cin' => $cand->getCIN(),
         'cne' => $cand->getCNE(),
         'specialite'=>$cand->getSpecialite()?->getIntitule(),
+        'nationnalite'=>$cand->getNationnalite(),
+
     ];
 }
        
