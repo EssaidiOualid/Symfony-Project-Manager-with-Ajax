@@ -59,6 +59,8 @@ class CandidateRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('C')
             ->andWhere('C.CIN like :str')
+            ->orWhere('C.Nom like :str')
+            ->orWhere('C.Prenom like :str')
             ->setParameter('str', $str)
             ->getQuery()
             ->execute();

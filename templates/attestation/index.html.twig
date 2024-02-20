@@ -13,13 +13,13 @@
 	<div class="row">
 		<div class="col-md-12">
             <div  class="card mb-4">
-				<h5 class="card-header">Recherche Details</h5>
+				<h5 class="card-header">Recherche Candidate</h5>
 				<!-- Account -->
                 <div class="card-body">
 					<div class="row">
                    
 						<div class="mb-3 col-md-6">
-							<label for="cin" class="form-label">CIN</label>
+							<!--<label for="cin" class="form-label">CIN</label>-->
 							<input class="form-control" type="text" id="cin" name="cin" />
 						</div>
                     </div>
@@ -36,32 +36,35 @@
      </form>
  
 <!-- Details de candidate -->
-<div class="row" id="Details_candidate">
-<table id="candidate_table">
-<thead>
-						<tr>
-							<th style="width: 10rem;">CIN</th>
 
-							<th style="width: 10rem;">Nom</th>
+<div id="Details_candidate">
+    <div class="card">
+		<div class="table-responsive">
+			<h5 class="card-header">Liste des candidates</h5>
 
-							<th style="width: 10rem;">Prenom</th>
+            <table class="table w-100 text-center" id="candidate_table">
+                <thead>
+					<tr>
+						<th style="width: 10rem;">CIN</th>
 
-							<th style="width: 10rem;">Nationalite</th>
+						<th style="width: 10rem;">Nom</th>
 
-							<th style="width: 10rem;">Fonctionnaire</th>
+						<th style="width: 10rem;">Prenom</th>
 
-							<th style="width: 20rem;">Specialite</th>
-                            <th style="width: 20rem;">Action</th>
+						<th style="width: 10rem;">Nationalite</th>
 
-
-						</tr>
-					</thead>
-					<tbody>
+						<th style="width: 20rem;">Specialite</th>
+                        <th style="width: 30rem;">Action</th>
+					</tr>
+				</thead>
+			    <tbody id="donne">
 
                 </tbody> 
-</table>
-		
+            </table>
+         </div>
     </div>
+		
+</div>
 
 	
 {% block javascript %}
@@ -99,20 +102,24 @@ $(document).ready(function(){
                     data: $(this).serialize()
                 }).then((response) => {
                     $("#Details_candidate")[0].style.display = 'block'
-                          console.log(response);
+                    
                     if(!$.isEmptyObject(response)){
-                      console.log(response);
+
+                        let element = document.getElementById("donne");
+                    element.remove();
+                    let tbdy=$('<tbody id="donne">');
                         for(let i=0;i<response.length;i++){
+                            
                                let row = $('<tr>');
                                row.append('<td>'+ response[i].cin+'</td>');
                                row.append('<td>'+ response[i].nom+'</td>');
                                row.append('<td>'+ response[i].prenom+'</td>');
                                row.append('<td>'+ response[i].nationnalite+'</td>');
-                               row.append('<td>'+ response[i].Fonctionnaire ? "oui":"Non" +'</td>');
-                               row.append('<td>'+ response[i].specialite?.intitule??""+'</td>');
+                               row.append('<td>'+ response[i].specialite??""+'</td>');
                                row.append('<td> <a  id="btn_impremer" href="attestation_impr/'+response[i].id+'"  class="btn btn-primary me-2 impremer" >Imprimer Attesstation</a> </td>')
-                                $('#candidate_table').append(row);
+                              tbdy.append(row);
                         }
+                          $('#candidate_table').append(tbdy);
 
                          
                        // $('#cin1').val(response.cin);
