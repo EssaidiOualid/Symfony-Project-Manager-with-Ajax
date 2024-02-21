@@ -6,16 +6,16 @@
 	<div class="card">
 		<div class="table-responsive">
 			<h3 class="card-header">Liste des  Candidats</h3>
-			<div class="container-sm" style="margin: 0 0 20px 0;">
-				{% for type in type_list %}
-					<button onclick="showTable('{{ type.intitule }}')" type="button" class="btn btn-outline-primary">
-						{{ type.intitule }}
-					</button>
-				{% endfor %}
-			</div>
-
+			{# 	<div class="container-sm" style="margin: 0 0 20px 0;">
+										{% for type in type_list %}
+											<button onclick="showTable('{{ type.intitule }}')" type="button" class="btn btn-outline-primary">
+												{{ type.intitule }}
+											</button>
+										{% endfor %}
+									</div>
+						 #}
 			{% for type in type_list %}
-				<div id="{{type.intitule}}" class="tables" style="display: none;">
+				<div id="{{type.intitule}}" class="tables">
 					<h4 class="card-header text-center">{{type.intitule}}</h4>
 					<table class="table table-striped" id="client_table">
 
@@ -215,8 +215,8 @@ location.reload()
 }
 })
 }
-})
-function showTable(idTableau) { // Cacher tous les tableaux
+}) {
+# function showTable(idTableau) { // Cacher tous les tableaux
 var tables = document.getElementsByClassName('tables');
 for (var i = 0; i < tables.length; i++) {
 tables[i].style.display = 'none';
@@ -227,6 +227,8 @@ var tableau = document.getElementById(idTableau);
 if (tableau) {
 tableau.style.display = 'block';
 }
+}
+#
 }
 		</script>
 	{% endblock %}
