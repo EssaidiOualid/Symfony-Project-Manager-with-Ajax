@@ -50,7 +50,7 @@ class CandidateController extends AbstractController
 
     #[Route('/candidate', name: 'app_candidate')]
     public function index(): Response
-    {  
+    {
         $type = $this->TypeRepository->findAll();
         $candidatList2 = $this->PostRepository->findAll();
         $categorie = $this->categorieRepository->findAll();
@@ -196,6 +196,38 @@ class CandidateController extends AbstractController
             'totalBySpecialite' => $totalBySpecialite,
             'totalByType' => $totalByType,
             'Total' => $total,
+            'Categorie' => $categories,
+            'session' => $session
+        ));
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'PV ' . date('Y_m_d') . '.pdf'
+        );
+    }
+    #[Route('/candidate/pdf/affecter', name: 'candidate_PDf_aff', methods: 'get')]
+    public function pdfActionAFF(Pdf $knpSnappyPdf)
+    {
+
+        $type = $this->TypeRepository->findAll();
+
+        // $posts = $this->PostRepository->findBySession();
+        $categories = $this->categorieRepository->findAll();
+
+        $candidatListA = $this->candidateRepository->findAllCandidate(); //liste des candidate affecter
+        // dd($candidatListA);
+
+
+        // dd($condid);
+        $session = $this->sessionRepository->findOneBy([
+            'active' => 1
+        ]);
+
+        $knpSnappyPdf->setOption('footer-center', '[page]');
+
+        $html = $this->renderView('candidate/pdfPV.html.twig', array(
+            'candidate_list_affecter' => $candidatListA,
+            'type_list' => $type,
             'Categorie' => $categories,
             'session' => $session
         ));

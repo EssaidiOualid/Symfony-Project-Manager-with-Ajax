@@ -36,7 +36,7 @@ class CandidateRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
-     /**
+    /**
      * @return Candidate[]
      */
     public function findAllCandidateValide(): array
