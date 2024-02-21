@@ -175,6 +175,12 @@
 						<span style="font-family:'Century Gothic';">Nom et Pr&eacute;nom&nbsp;</span>
 					</p>
 				</td>
+				<td style="width:111.4pt; border-right-style:solid; border-right-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3.5pt; vertical-align:top; background-color:#8adaf0;">
+					<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+						<span style="font-family:'Century Gothic';">Signature</span>
+					</p>
+				</td>
+
 
 			</tr>
 		</thead>
@@ -231,17 +237,23 @@
 
 								<td
 									style="width:111.4pt; border-right-style:solid; border-right-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3.5pt; vertical-align:top;">{# {% if candidate_list_affecter[Post.categorie.id][Post.specialite.id] is defined and candidate_list_affecter[Post.categorie.id][Post.specialite.id] not in F %}
-																																								
-																																								
-																																																		{{ candidate_list_affecter[Post.categorie.id][Post.specialite.id].nom}}
-																																																		{{ candidate_list_affecter[Post.categorie.id][Post.specialite.id].prenom}}
-																																								
-																																																		{% set F = F|merge([candidate_list_affecter[Post.categorie.id][Post.specialite.id]]) %}
-																																								
-																																								
-																																																	{% endif %}
-																																								 #}
+																																																																																
+																														
+																																								{{ candidate_list_affecter[Post.categorie.id][Post.specialite.id].nom}}
+																																								{{ candidate_list_affecter[Post.categorie.id][Post.specialite.id].prenom}}
+																														
+																																								{% set F = F|merge([candidate_list_affecter[Post.categorie.id][Post.specialite.id]]) %}
+																														
+																														
+																																							{% endif %}
+																															#}
 
+								</td>
+
+								<td style="width:111.4pt; border-right-style:solid; border-right-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:3pt; padding-left:3.5pt; vertical-align:top;">
+									<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+										<span style="font-family:'Century Gothic';"></span>
+									</p>
 								</td>
 
 
@@ -277,6 +289,12 @@
 
 						</p>
 					</td>
+					<td style="width:95.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#8adaf0;">
+						<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+							<span style="font-family:'Century Gothic';">&nbsp;</span>
+						</p>
+					</td>
+
 
 				</tr>
 			{% endif %}
@@ -305,6 +323,12 @@
 
 					</p>
 				</td>
+				<td style="width:95.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#8adaf0;">
+					<p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:14pt;">
+						<span style="font-family:'Century Gothic';">&nbsp;</span>
+					</p>
+				</td>
+
 
 			</tr>
 
