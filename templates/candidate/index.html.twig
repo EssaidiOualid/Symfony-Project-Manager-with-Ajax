@@ -139,8 +139,8 @@
 
 										</td>
 
-										<td>
-											<a class="btn btn-primary btn-sm edit_client_btn" data-id="{{ Candidat.id }}" style="width: 2.6rem;" href="javascript:void(0);">
+									<td>
+										<a class="btn btn-primary btn-sm edit_client_btn deleteBtn" data-id="{{ Candidat.id }}" style="width: 2.6rem;" href="javascript:void(0);">
 
 												<i class="bx bx-check me-1"></i>
 											</a>
@@ -173,63 +173,75 @@
 		<script>
 
 			$(document).on('click', '.edit_client_btn', function () {
-let id = $(this).data('id');
-let url = "{{ path('update_candidate', {id: 'p_id',id1:'p_id1',id2:'p_id2'}) }}";
-let id1 = $("#Specialite_".concat(id))[0].value;
-let id2 = $("#categorie_".concat(id))[0].value;
+				let id = $(this).data('id');
+				let url = "{{ path('update_candidate', {id: 'p_id',id1:'p_id1',id2:'p_id2'}) }}";
+				let id1 = $("#Specialite_".concat(id))[0].value;
+				let id2 = $("#categorie_".concat(id))[0].value;
+				let row = $(this).parent().parent();
 
 
-event.preventDefault();
-// Data validation
-let fields = [id1, id2];
+				event.preventDefault();
+				// Data validation
+				let fields = [id1, id2];
 
-let isValid = true;
+				let isValid = true;
 
-fields.forEach(field => {
-if (field === "") { // field.addClass("error");
-isValid = false;
-}
-});
+				fields.forEach(field => {
+					if (field === "") { // field.addClass("error");
+						isValid = false;
+					}
+				});
 
-if (isValid) {
-$.ajax({
-url: url.replace('p_id', id).replace('p_id1', id1).replace('p_id2', id2),
+				if (isValid) {
+				$.ajax({
+					url: url.replace('p_id', id).replace('p_id1', id1).replace('p_id2', id2),
 
 
-method: 'POST',
-data: $(this).serialize()
-}).then((response) => {
-if (response == "updated") {
-Swal.fire({
-icon: 'success',
-title: 'Updated',
-text: 'The client has been updated.',
-confirmButtonColor: '#3085d6',
-confirmButtonText: 'OK',
-timer: 1000
-}).then(function () {
-setTimeout(function () {
-location.reload()
-}, 500);
-});
-}
-})
-}
-}) {
-# function showTable(idTableau) { // Cacher tous les tableaux
-var tables = document.getElementsByClassName('tables');
-for (var i = 0; i < tables.length; i++) {
-tables[i].style.display = 'none';
-}
+					method: 'POST',
+					data: $(this).serialize()
+					}).then((response) => {
+						if (response == "updated") {
+								Swal.fire({
+								icon: 'success',
+								title: 'Mise a jour',
+								text: 'Les information ont bien été mis à jour',
+								confirmButtonColor: '#3085d6',
+								confirmButtonText: 'OK',
+								timer: 1500
+							}).then(function () {
+								console.log(row);
+								row.remove();
+							});
+						}
+					})
+				}
+			})
 
-// Afficher le tableau correspondant à l'ID passé en paramètre
-var tableau = document.getElementById(idTableau);
-if (tableau) {
-tableau.style.display = 'block';
-}
-}
-#
-}
+
+		//scripte de navigation entre les tables
+		function showTable(idTableau) { // Cacher tous les tableaux
+			var tables = document.getElementsByClassName('tables');
+			for (var i = 0; i < tables.length; i++) {
+				tables[i].style.display = 'none';
+			}
+			// Afficher le tableau correspondant à l'ID passé en paramètre
+			var tableau = document.getElementById(idTableau);
+			if (tableau) {
+				tableau.style.display = 'block';
+			}
+		}
+
+		//Scripte pour la suppression de la ligne
+		/*document.addEventListener('DOMContentLoaded', function() {
+			var deleteButtons = document.querySelectorAll('.deleteBtn');
+
+			deleteButtons.forEach(function(button) {
+			button.addEventListener('click', function() {
+				var row = this.parentNode.parentNode;
+				row.parentNode.removeChild(row);
+			});
+			});
+		});*/
 		</script>
 	{% endblock %}
 {% endblock %}
