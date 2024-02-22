@@ -9,161 +9,163 @@
 			<h3 class="card-header">Liste des  Candidats</h3>
 			<div class="container-sm" style="margin: 0 0 20px 0;">
 				{% for type in type_list %}
-					<button onclick="showTable('{{ type.intitule }}')" type="button" class="btn btn-outline-primary"> {{ type.intitule }} </button>
+					<button onclick="showTable('{{ type.intitule }}')" type="button" class="btn btn-outline-primary">
+						{{ type.intitule }}
+					</button>
 				{% endfor %}
 			</div>
-				
+
 			{% for type in type_list %}
 				<div id="{{type.intitule}}" class="tables" style="display: none;">
-				<h4 class="card-header text-center">{{type.intitule}}</h4>
-				<table class="table table-striped" id="client_table">
+					<h4 class="card-header text-center">{{type.intitule}}</h4>
+					<table class="table table-striped" id="client_table">
 
 
-					<thead>
-						<tr>
-							<th style="width: 10rem;">Rang</th>
+						<thead>
+							<tr>
+								<th style="width: 10rem;">Rang</th>
 
-							<th style="width: 10rem;">CIN</th>
+								<th style="width: 10rem;">CIN</th>
 
-							<th style="width: 10rem;">Nom</th>
+								<th style="width: 10rem;">Nom</th>
 
-							<th style="width: 10rem;">Prenom</th>
+								<th style="width: 10rem;">Prenom</th>
 
-							<th style="width: 10rem;">Nationalite</th>
+								<th style="width: 10rem;">Nationalite</th>
 
-							<th style="width: 10rem;">Fonctionnaire</th>
+								<th style="width: 10rem;">Fonctionnaire</th>
 
 
-							<th style="width: 20rem;">Type</th>
+								<th style="width: 20rem;">Type</th>
 
 
-							<th style="width: 20rem;">Specialite</th>
+								<th style="width: 20rem;">Specialite</th>
 
-							<th style="width: 20rem;">Validation</th>
+								<th style="width: 20rem;">Validation</th>
 
 
-						</tr>
-					</thead>
-					<tbody>
-						{% for Candidat in candidat_list %}
+							</tr>
+						</thead>
+						<tbody>
+							{% for Candidat in candidat_list %}
 
-							{% if (Candidat.type.intitule == type.intitule) %}
+								{% if (Candidat.type.intitule == type.intitule) %}
 
-								<tr>
-									<td>{{ Candidat.Rang|abs }}</td>
+									<tr>
+										<td>{{ Candidat.Rang|abs }}</td>
 
-									<td>{{ Candidat.cin }}</td>
-									<td>{{ Candidat.nom }}</td>
-									<td>{{ Candidat.prenom }}</td>
-									<td>{{ Candidat.nationnalite }}</td>
-									<td>{{ Candidat.Fonctionnaire ? "oui":"Non" }}</td>
-									<td>
-										{% if Candidat.Fonctionnaire == true or Candidat.nationnalite !='MAROCAINE'   %}
+										<td>{{ Candidat.cin }}</td>
+										<td>{{ Candidat.nom }}</td>
+										<td>{{ Candidat.prenom }}</td>
+										<td>{{ Candidat.nationnalite }}</td>
+										<td>{{ Candidat.Fonctionnaire ? "oui":"Non" }}</td>
+										<td>
+											{% if Candidat.Fonctionnaire == true or Candidat.nationnalite !='MAROCAINE'   %}
 
-											<select class="form-select" id="categorie_{{ Candidat.id }}" disabled>
+												<select class="form-select" id="categorie_{{ Candidat.id }}" disabled>
 
 
-												<option value="{{ Candidat.categorie.id }}" id="categorie_{{ Candidat.id }}_{{ Candidat.categorie.id }}">{{Candidat.categorie.intitule}}</option>
+													<option value="{{ Candidat.categorie.id }}" id="categorie_{{ Candidat.id }}_{{ Candidat.categorie.id }}">{{Candidat.categorie.intitule}}</option>
 
-											</select>
+												</select>
 
-										{% else %}
-											<select class="form-select" id="categorie_{{ Candidat.id }}">
+											{% else %}
+												<select class="form-select" id="categorie_{{ Candidat.id }}">
 
-												{% for categorie in categorie_list %}
-													{% if categorie.intitule != 'Benevole etranger' %}
+													{% for categorie in categorie_list %}
+														{% if categorie.intitule != 'Bénévole étranger' %}
 
-														<option value="{{ categorie.id }}" id="categorie_{{ Candidat.id }}_{{ categorie.id }}">{{categorie.intitule}}</option>
-													{% endif %}
+															<option value="{{ categorie.id }}" id="categorie_{{ Candidat.id }}_{{ categorie.id }}">{{categorie.intitule}}</option>
+														{% endif %}
 
-												{% endfor %}
-											</select>
+													{% endfor %}
+												</select>
 
-										{% endif %}
+											{% endif %}
 
 
-									</td>
+										</td>
 
 
-									<td>
-										{% if Candidat.Fonctionnaire == true    %}
-											<select class="form-select" id="Specialite_{{ Candidat.id }}">
+										<td>
+											{% if Candidat.Fonctionnaire == true    %}
+												<select class="form-select" id="Specialite_{{ Candidat.id }}">
 
 
-												{% for Specialite in spC %}
+													{% for Specialite in spC %}
 
-													{% if Specialite.type == type %}
+														{% if Specialite.type == type %}
 
-														<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+															<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
 
 
-													{% endif %}
-												{% endfor %}
-											</select>
+														{% endif %}
+													{% endfor %}
+												</select>
 
-										{% elseif  Candidat.nationnalite !='MAROCAINE'   %}
-											<select class="form-select" id="Specialite_{{ Candidat.id }}">
+											{% elseif  Candidat.nationnalite !='MAROCAINE'   %}
+												<select class="form-select" id="Specialite_{{ Candidat.id }}">
 
 
-												{% for Specialite in spB %}
+													{% for Specialite in spB %}
 
-													{% if Specialite.type == type %}
+														{% if Specialite.type == type %}
 
 
-														<option value="{{ Specialite.id}}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+															<option value="{{ Specialite.id}}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
 
 
-													{% endif %}
-												{% endfor %}
-											</select>
+														{% endif %}
+													{% endfor %}
+												</select>
 
-										{% else %}
-											<select class="form-select" id="Specialite_{{ Candidat.id }}">
+											{% else %}
+												<select class="form-select" id="Specialite_{{ Candidat.id }}">
 
 
-												{% for Specialite in Specialite_list %}
+													{% for Specialite in Specialite_list %}
 
 
-													{% if Specialite.type == type %}
+														{% if Specialite.type == type %}
 
-														<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }} " {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+															<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }} " {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
 
 
-													{% endif %}
-												{% endfor %}
-											</select>
+														{% endif %}
+													{% endfor %}
+												</select>
 
 
-										{% endif %}
+											{% endif %}
 
-									</td>
+										</td>
 
-									<td>
-										<a class="btn btn-primary btn-sm edit_client_btn deleteBtn" data-id="{{ Candidat.id }}" style="width: 2.6rem;" href="javascript:void(0);">
+										<td>
+											<a class="btn btn-primary btn-sm edit_client_btn deleteBtn" data-id="{{ Candidat.id }}" style="width: 2.6rem;" href="javascript:void(0);">
 
-											<i class="bx bx-check me-1"></i>
-										</a>
+												<i class="bx bx-check me-1"></i>
+											</a>
 
-									</td>
+										</td>
 
-								</tr>
+									</tr>
 
-							{% endif %}
-						{% endfor %}
+								{% endif %}
+							{% endfor %}
 
-					</tbody>
+						</tbody>
 
-				</table>
-				<div class="d-grid gap-2 col-6 mx-auto mt-4" style="margin: 0 0 20px 0;">
+					</table>
+					<div class="d-grid gap-2 col-6 mx-auto mt-4" style="margin: 0 0 20px 0;">
 
-					<a href="{{path('candidate_PDf',{'id':type.id})}}" class="btn btn-primary">Télécharger PV
-						{{type.intitule}}
+						<a href="{{path('candidate_PDf',{'id':type.id})}}" class="btn btn-primary">Télécharger PV
+							{{type.intitule}}
 
 
-					</a>
+						</a>
 
+					</div>
 				</div>
-			</div>
 			{% endfor %}
 
 		</div>
@@ -172,66 +174,66 @@
 		<script>
 
 			$(document).on('click', '.edit_client_btn', function () {
-				let id = $(this).data('id');
-				let url = "{{ path('update_candidate', {id: 'p_id',id1:'p_id1',id2:'p_id2'}) }}";
-				let id1 = $("#Specialite_".concat(id))[0].value;
-				let id2 = $("#categorie_".concat(id))[0].value;
-				let row = $(this).parent().parent();
+let id = $(this).data('id');
+let url = "{{ path('update_candidate', {id: 'p_id',id1:'p_id1',id2:'p_id2'}) }}";
+let id1 = $("#Specialite_".concat(id))[0].value;
+let id2 = $("#categorie_".concat(id))[0].value;
+let row = $(this).parent().parent();
 
 
-				event.preventDefault();
-				// Data validation
-				let fields = [id1, id2];
+event.preventDefault();
+// Data validation
+let fields = [id1, id2];
 
-				let isValid = true;
+let isValid = true;
 
-				fields.forEach(field => {
-					if (field === "") { // field.addClass("error");
-						isValid = false;
-					}
-				});
+fields.forEach(field => {
+if (field === "") { // field.addClass("error");
+isValid = false;
+}
+});
 
-				if (isValid) {
-				$.ajax({
-					url: url.replace('p_id', id).replace('p_id1', id1).replace('p_id2', id2),
-
-
-					method: 'POST',
-					data: $(this).serialize()
-					}).then((response) => {
-						if (response == "updated") {
-								Swal.fire({
-								icon: 'success',
-								title: 'Mise a jour',
-								text: 'Les information ont bien été mis à jour',
-								confirmButtonColor: '#3085d6',
-								confirmButtonText: 'OK',
-								timer: 1500
-							}).then(function () {
-								console.log(row);
-								row.remove();
-							});
-						}
-					})
-				}
-			})
+if (isValid) {
+$.ajax({
+url: url.replace('p_id', id).replace('p_id1', id1).replace('p_id2', id2),
 
 
-		//scripte de navigation entre les tables
-		function showTable(idTableau) { // Cacher tous les tableaux
-			var tables = document.getElementsByClassName('tables');
-			for (var i = 0; i < tables.length; i++) {
-				tables[i].style.display = 'none';
-			}
-			// Afficher le tableau correspondant à l'ID passé en paramètre
-			var tableau = document.getElementById(idTableau);
-			if (tableau) {
-				tableau.style.display = 'block';
-			}
-		}
+method: 'POST',
+data: $(this).serialize()
+}).then((response) => {
+if (response == "updated") {
+Swal.fire({
+icon: 'success',
+title: 'Mise a jour',
+text: 'Les information ont bien été mis à jour',
+confirmButtonColor: '#3085d6',
+confirmButtonText: 'OK',
+timer: 1500
+}).then(function () {
+console.log(row);
+row.remove();
+});
+}
+})
+}
+})
 
-		//Scripte pour la suppression de la ligne
-		/*document.addEventListener('DOMContentLoaded', function() {
+
+// scripte de navigation entre les tables
+function showTable(idTableau) { // Cacher tous les tableaux
+var tables = document.getElementsByClassName('tables');
+for (var i = 0; i < tables.length; i++) {
+tables[i].style.display = 'none';
+}
+// Afficher le tableau correspondant à l'ID passé en paramètre
+var tableau = document.getElementById(idTableau);
+if (tableau) {
+tableau.style.display = 'block';
+}
+}
+
+// Scripte pour la suppression de la ligne
+/*document.addEventListener('DOMContentLoaded', function() {
 			var deleteButtons = document.querySelectorAll('.deleteBtn');
 
 			deleteButtons.forEach(function(button) {
