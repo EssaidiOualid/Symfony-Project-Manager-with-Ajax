@@ -1,170 +1,169 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Hello CandidateController!
+{% endblock %}
 
 {% block content %}
 	<div class="card">
 		<div class="table-responsive">
 			<h3 class="card-header">Liste des  Candidats</h3>
-			{# 	<div class="container-sm" style="margin: 0 0 20px 0;">
-										{% for type in type_list %}
-											<button onclick="showTable('{{ type.intitule }}')" type="button" class="btn btn-outline-primary">
-												{{ type.intitule }}
-											</button>
-										{% endfor %}
-									</div>
-						 #}
+			<div class="container-sm" style="margin: 0 0 20px 0;">
+				{% for type in type_list %}
+					<button onclick="showTable('{{ type.intitule }}')" type="button" class="btn btn-outline-primary"> {{ type.intitule }} </button>
+				{% endfor %}
+			</div>
+				
 			{% for type in type_list %}
-				<div id="{{type.intitule}}" class="tables">
-					<h4 class="card-header text-center">{{type.intitule}}</h4>
-					<table class="table table-striped" id="client_table">
+				<div id="{{type.intitule}}" class="tables" style="display: none;">
+				<h4 class="card-header text-center">{{type.intitule}}</h4>
+				<table class="table table-striped" id="client_table">
 
 
-						<thead>
-							<tr>
-								<th style="width: 10rem;">Rang</th>
+					<thead>
+						<tr>
+							<th style="width: 10rem;">Rang</th>
 
-								<th style="width: 10rem;">CIN</th>
+							<th style="width: 10rem;">CIN</th>
 
-								<th style="width: 10rem;">Nom</th>
+							<th style="width: 10rem;">Nom</th>
 
-								<th style="width: 10rem;">Prenom</th>
+							<th style="width: 10rem;">Prenom</th>
 
-								<th style="width: 10rem;">Nationalite</th>
+							<th style="width: 10rem;">Nationalite</th>
 
-								<th style="width: 10rem;">Fonctionnaire</th>
-
-
-								<th style="width: 20rem;">Type</th>
+							<th style="width: 10rem;">Fonctionnaire</th>
 
 
-								<th style="width: 20rem;">Specialite</th>
-
-								<th style="width: 20rem;">Validation</th>
+							<th style="width: 20rem;">Type</th>
 
 
-							</tr>
-						</thead>
-						<tbody>
-							{% for Candidat in candidat_list %}
+							<th style="width: 20rem;">Specialite</th>
 
-								{% if (Candidat.type.intitule == type.intitule) %}
-
-									<tr>
-										<td>{{ Candidat.Rang|abs }}</td>
-
-										<td>{{ Candidat.cin }}</td>
-										<td>{{ Candidat.nom }}</td>
-										<td>{{ Candidat.prenom }}</td>
-										<td>{{ Candidat.nationnalite }}</td>
-										<td>{{ Candidat.Fonctionnaire ? "oui":"Non" }}</td>
-										<td>
-											{% if Candidat.Fonctionnaire == true or Candidat.nationnalite !='MAROCAINE'   %}
-
-												<select class="form-select" id="categorie_{{ Candidat.id }}" disabled>
+							<th style="width: 20rem;">Validation</th>
 
 
-													<option value="{{ Candidat.categorie.id }}" id="categorie_{{ Candidat.id }}_{{ Candidat.categorie.id }}">{{Candidat.categorie.intitule}}</option>
+						</tr>
+					</thead>
+					<tbody>
+						{% for Candidat in candidat_list %}
 
-												</select>
+							{% if (Candidat.type.intitule == type.intitule) %}
 
-											{% else %}
-												<select class="form-select" id="categorie_{{ Candidat.id }}">
+								<tr>
+									<td>{{ Candidat.Rang|abs }}</td>
 
-													{% for categorie in categorie_list %}
-														{% if categorie.intitule != 'Bénévole étranger' %}
+									<td>{{ Candidat.cin }}</td>
+									<td>{{ Candidat.nom }}</td>
+									<td>{{ Candidat.prenom }}</td>
+									<td>{{ Candidat.nationnalite }}</td>
+									<td>{{ Candidat.Fonctionnaire ? "oui":"Non" }}</td>
+									<td>
+										{% if Candidat.Fonctionnaire == true or Candidat.nationnalite !='MAROCAINE'   %}
 
-															<option value="{{ categorie.id }}" id="categorie_{{ Candidat.id }}_{{ categorie.id }}">{{categorie.intitule}}</option>
-														{% endif %}
-
-													{% endfor %}
-												</select>
-
-											{% endif %}
-
-
-										</td>
-
-
-										<td>
-											{% if Candidat.Fonctionnaire == true    %}
-												<select class="form-select" id="Specialite_{{ Candidat.id }}">
+											<select class="form-select" id="categorie_{{ Candidat.id }}" disabled>
 
 
-													{% for Specialite in spC %}
+												<option value="{{ Candidat.categorie.id }}" id="categorie_{{ Candidat.id }}_{{ Candidat.categorie.id }}">{{Candidat.categorie.intitule}}</option>
 
-														{% if Specialite.type == type %}
+											</select>
 
-															<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+										{% else %}
+											<select class="form-select" id="categorie_{{ Candidat.id }}">
 
+												{% for categorie in categorie_list %}
+													{% if categorie.intitule != 'Benevole etranger' %}
 
-														{% endif %}
-													{% endfor %}
-												</select>
+														<option value="{{ categorie.id }}" id="categorie_{{ Candidat.id }}_{{ categorie.id }}">{{categorie.intitule}}</option>
+													{% endif %}
 
-											{% elseif  Candidat.nationnalite !='MAROCAINE'   %}
-												<select class="form-select" id="Specialite_{{ Candidat.id }}">
+												{% endfor %}
+											</select>
 
-
-													{% for Specialite in spB %}
-
-														{% if Specialite.type == type %}
-
-
-															<option value="{{ Specialite.id}}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+										{% endif %}
 
 
-														{% endif %}
-													{% endfor %}
-												</select>
-
-											{% else %}
-												<select class="form-select" id="Specialite_{{ Candidat.id }}">
+									</td>
 
 
-													{% for Specialite in Specialite_list %}
+									<td>
+										{% if Candidat.Fonctionnaire == true    %}
+											<select class="form-select" id="Specialite_{{ Candidat.id }}">
 
 
-														{% if Specialite.type == type %}
+												{% for Specialite in spC %}
 
-															<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }} " {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+													{% if Specialite.type == type %}
 
-
-														{% endif %}
-													{% endfor %}
-												</select>
+														<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
 
 
-											{% endif %}
+													{% endif %}
+												{% endfor %}
+											</select>
 
-										</td>
+										{% elseif  Candidat.nationnalite !='MAROCAINE'   %}
+											<select class="form-select" id="Specialite_{{ Candidat.id }}">
+
+
+												{% for Specialite in spB %}
+
+													{% if Specialite.type == type %}
+
+
+														<option value="{{ Specialite.id}}" id="categorie_{{ Candidat.id }}_{{Specialite.id }}" {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+
+
+													{% endif %}
+												{% endfor %}
+											</select>
+
+										{% else %}
+											<select class="form-select" id="Specialite_{{ Candidat.id }}">
+
+
+												{% for Specialite in Specialite_list %}
+
+
+													{% if Specialite.type == type %}
+
+														<option value="{{ Specialite.id }}" id="categorie_{{ Candidat.id }}_{{Specialite.id }} " {% if Specialite.intitule == 'Sans choix' %} selected="selected" {% endif %}>{{ Specialite.intitule }}</option>
+
+
+													{% endif %}
+												{% endfor %}
+											</select>
+
+
+										{% endif %}
+
+									</td>
 
 									<td>
 										<a class="btn btn-primary btn-sm edit_client_btn deleteBtn" data-id="{{ Candidat.id }}" style="width: 2.6rem;" href="javascript:void(0);">
 
-												<i class="bx bx-check me-1"></i>
-											</a>
+											<i class="bx bx-check me-1"></i>
+										</a>
 
-										</td>
+									</td>
 
-									</tr>
+								</tr>
 
-								{% endif %}
-							{% endfor %}
+							{% endif %}
+						{% endfor %}
 
-						</tbody>
+					</tbody>
 
-					</table>
-					<div class="d-grid gap-2 col-6 mx-auto mt-4" style="margin: 0 0 20px 0;">
+				</table>
+				<div class="d-grid gap-2 col-6 mx-auto mt-4" style="margin: 0 0 20px 0;">
 
-						<a href="{{path('candidate_PDf',{'id':type.id})}}" class="btn btn-primary">Télécharger PV
-							{{type.intitule}}
+					<a href="{{path('candidate_PDf',{'id':type.id})}}" class="btn btn-primary">Télécharger PV
+						{{type.intitule}}
 
 
-						</a>
+					</a>
 
-					</div>
 				</div>
+			</div>
 			{% endfor %}
 
 		</div>
