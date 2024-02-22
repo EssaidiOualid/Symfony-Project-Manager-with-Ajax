@@ -73,7 +73,8 @@
 												<select class="form-select" id="categorie_{{ Candidat.id }}">
 
 													{% for categorie in categorie_list %}
-														{% if categorie.intitule != 'Bénévole étranger' %}
+														{% if categorie.intitule != 'Benevol Etranger' %}
+
 
 															<option value="{{ categorie.id }}" id="categorie_{{ Candidat.id }}_{{ categorie.id }}">{{categorie.intitule}}</option>
 														{% endif %}
